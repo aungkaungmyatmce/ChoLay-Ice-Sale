@@ -1,4 +1,10 @@
+import 'package:cholay_ice_sale/screens/fade_page_route_builder.dart';
+import 'package:cholay_ice_sale/screens/routes.dart';
 import 'package:flutter/material.dart';
+
+import 'commom/constants/route_constants.dart';
+import 'commom/themes/app_color.dart';
+import 'commom/themes/theme_text.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,27 +17,44 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Cholay Ice',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        unselectedWidgetColor: AppColor.royalBlue,
+        primaryColor: AppColor.primaryColor,
+        scaffoldBackgroundColor: AppColor.primaryColor,
+        brightness: Brightness.light,
+        cardTheme: CardTheme(
+          color: AppColor.primaryColor,
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: ThemeText.getTextTheme(),
+        appBarTheme: const AppBarTheme(
+            elevation: 0, backgroundColor: AppColor.secondaryColor),
+        inputDecorationTheme: InputDecorationTheme(
+          hintStyle: Theme.of(context).textTheme.greySubtitle1,
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColor.primaryColor,
+            ),
+          ),
+          enabledBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: HomeScreen(),
+      // builder: (context, child) {
+      //   return LoadingScreen(screen: child!);
+      // },
+      initialRoute: RouteList.initial,
+      onGenerateRoute: (RouteSettings settings) {
+        final routes = Routes.getRoutes(settings);
+        final WidgetBuilder? builder = routes[settings.name];
+        return FadePageRouteBuilder(
+          builder: builder!,
+          settings: settings,
+        );
+      },
     );
   }
 }
