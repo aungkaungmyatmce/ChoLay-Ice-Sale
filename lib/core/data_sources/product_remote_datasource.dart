@@ -15,11 +15,14 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
     List<Product> productList = [];
     DocumentSnapshot docSnapshot =
         await productCollection.doc('productList').get();
-    if (docSnapshot.exists) {
+    if (!docSnapshot.exists) {
       throw Exception();
     }
-    Map proMap = docSnapshot.data() as Map;
-    productList = proMap['productList'];
+    Map<String, dynamic> proMap = docSnapshot.data() as Map<String, dynamic>;
+    productList = proMap['productList']
+        .map((pro) => Product.fromJson(pro))
+        .toList()
+        .cast<Product>();
     return productList;
   }
 

@@ -6,8 +6,7 @@ class Product {
 
   Product({required this.name, required this.price});
 
-  factory Product.fromJson(QueryDocumentSnapshot json) {
-    Map<String, dynamic> jsonData = json.data() as Map<String, dynamic>;
+  factory Product.fromJson(Map jsonData) {
     return Product(
       name: jsonData['name'],
       price: jsonData['price'],

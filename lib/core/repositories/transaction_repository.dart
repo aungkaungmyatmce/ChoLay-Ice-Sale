@@ -19,6 +19,8 @@ abstract class TransactionRepository {
       {required DateTime tranMonth, required ExpenseTransaction expenseTran});
   Future<Either<AppError, void>> deleteExpenseTransaction(
       {required DateTime tranMonth, required ExpenseTransaction expenseTran});
+  Stream<List<SaleTransaction>> saleTransactionStream(
+      {required DateTime tranMonth});
 }
 
 class TransactionRepositoryImpl extends TransactionRepository {
@@ -36,7 +38,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     } on SocketException {
       return Left(AppError(AppErrorType.network));
     } on Exception {
-      return Left(AppError(AppErrorType.database));
+      return Left(AppError(AppErrorType.empty));
     }
   }
 
@@ -78,7 +80,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     } on SocketException {
       return Left(AppError(AppErrorType.network));
     } on Exception {
-      return Left(AppError(AppErrorType.database));
+      return Left(AppError(AppErrorType.empty));
     }
   }
 
@@ -110,5 +112,11 @@ class TransactionRepositoryImpl extends TransactionRepository {
     } on Exception {
       return Left(AppError(AppErrorType.database));
     }
+  }
+
+  @override
+  Stream<List<SaleTransaction>> saleTransactionStream(
+      {required DateTime tranMonth}) async* {
+    yield* remoteDataSource.saleTransactionStream(tranMonth: tranMonth);
   }
 }

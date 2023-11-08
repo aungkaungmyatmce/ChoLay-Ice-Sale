@@ -6,8 +6,8 @@ import '../models/order.dart';
 
 abstract class OrderRepository {
   Future<Either<AppError, List<Order>>> getOrderList();
-  Future<Either<AppError, void>> updateOrderList(
-      {required List<Order> orderList});
+  Future<Either<AppError, void>> addOrder({required Order order});
+  Future<Either<AppError, void>> deleteOrder({required Order order});
 }
 
 class OrderRepositoryImpl extends OrderRepository {
@@ -27,10 +27,22 @@ class OrderRepositoryImpl extends OrderRepository {
   }
 
   @override
-  Future<Either<AppError, void>> updateOrderList(
-      {required List<Order> orderList}) async {
+  Future<Either<AppError, void>> addOrder({required Order order}) async {
     try {
-      final response = remoteDataSource.updateOrderList(orderList: orderList);
+      final response = await remoteDataSource.addOrder(order: order);
+      return Right(response);
+    } on SocketException {
+      return Left(AppError(AppErrorType.network));
+    } on Exception {
+      return Left(AppError(AppErrorType.database));
+    }
+  }
+
+  @override
+  Future<Either<AppError, void>> deleteOrder({required Order order})async {
+    try {
+      final response = await remoteDataSource.deleteOrder(
+          order: order);
       return Right(response);
     } on SocketException {
       return Left(AppError(AppErrorType.network));

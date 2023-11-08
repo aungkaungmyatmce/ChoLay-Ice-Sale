@@ -3,7 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart' hide Order;
 
 abstract class OrderRemoteDataSource {
   Future<List<Order>> getOrderList();
-  Future<void> updateOrderList({required List<Order> orderList});
+  Future<void> addOrder({required Order order});
+  Future<void> deleteOrder({required Order order});
 }
 
 class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
@@ -13,19 +14,26 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
   @override
   Future<List<Order>> getOrderList() async {
     List<Order> orderList = [];
-    DocumentSnapshot docSnapshot = await orderCollection.doc('orderList').get();
-    if (docSnapshot.exists) {
+    QuerySnapshot snapshot = await orderCollection.get();
+
+    List docList = snapshot.docs;
+
+    if (docList.isEmpty) {
       throw Exception();
     }
-    Map orderMap = docSnapshot.data() as Map;
-    orderList = orderMap['orderList'];
+    docList.map((doc) {
+      orderList.add(Order.fromJson(doc));
+    }).toList();
     return orderList;
   }
 
   @override
-  Future<void> updateOrderList({required List<Order> orderList}) async {
-    await orderCollection.doc('orderList').update({
-      'orderList': orderList.map((customer) => customer.toJson()).toList(),
-    });
+  Future<void> addOrder({required Order order}) async {
+    await orderCollection.add(order.toJson());
+  }
+
+  @override
+  Future<void> deleteOrder({required Order order}) async {
+    await orderCollection.doc(order.orderId).delete();
   }
 }

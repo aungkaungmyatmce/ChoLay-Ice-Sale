@@ -43,6 +43,14 @@ dependencies:
   equatable: ^2.0.5
   dartz: ^0.10.1
   google_fonts: ^6.1.0
+  blue_print_pos: 0.0.14
+  bluetooth_print: ^4.3.0
+  get: ^4.6.6
+  get_it: ^7.2.0
+  another_flushbar: ^1.10.28
+  month_picker_dialog: ^2.2.1
+  geolocator: ^10.1.0
+  permission_handler: ^11.0.1
 
 dev_dependencies:
   flutter_test:

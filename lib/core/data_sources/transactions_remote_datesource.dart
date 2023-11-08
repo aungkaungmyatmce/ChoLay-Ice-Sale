@@ -17,6 +17,8 @@ abstract class TransactionRemoteDataSource {
       {required DateTime tranMonth, required ExpenseTransaction expenseTran});
   Future<void> deleteExpenseTransaction(
       {required DateTime tranMonth, required ExpenseTransaction expenseTran});
+  Stream<List<SaleTransaction>> saleTransactionStream(
+      {required DateTime tranMonth});
 }
 
 class TransactionRemoteDataSourceImpl extends TransactionRemoteDataSource {
@@ -33,9 +35,9 @@ class TransactionRemoteDataSourceImpl extends TransactionRemoteDataSource {
         .get();
     List docList = snapshot.docs;
 
-    if (docList.isEmpty) {
-      throw Exception();
-    }
+    // if (docList.isEmpty) {
+    //   throw Exception();
+    // }
     docList.map((doc) {
       tranList.add(SaleTransaction.fromJson(doc));
     }).toList();
@@ -69,7 +71,8 @@ class TransactionRemoteDataSourceImpl extends TransactionRemoteDataSource {
     QuerySnapshot snapshot = await transactionCollection
         .doc(DateFormat.yMMM().format(tranMonth).toString())
         .collection('expenseTransactions')
-        .get();
+        .get(GetOptions(source: Source.serverAndCache));
+
     List docList = snapshot.docs;
 
     if (docList.isEmpty) {
@@ -101,5 +104,25 @@ class TransactionRemoteDataSourceImpl extends TransactionRemoteDataSource {
         .doc(expenseTran.tranId)
         .delete();
     return response;
+  }
+
+  Stream<List<SaleTransaction>> saleTransactionStream(
+      {required DateTime tranMonth}) async* {
+    List<SaleTransaction> tranList = [];
+    await for (var snapshot in transactionCollection
+        .doc(DateFormat.yMMM().format(tranMonth).toString())
+        .collection('saleTransactions')
+        .snapshots()) {
+      tranList = [];
+      List docList = snapshot.docs;
+
+      // if (docList.isEmpty) {
+      //   throw Exception();
+      // }
+      docList.map((doc) {
+        tranList.add(SaleTransaction.fromJson(doc));
+      }).toList();
+      yield tranList;
+    }
   }
 }

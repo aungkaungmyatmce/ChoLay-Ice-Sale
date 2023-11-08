@@ -1,16 +1,15 @@
-class ProductTransaction {
+class ProductInfo {
   final String productName;
-  final int amount;
+  final int quantity;
   final int? price;
 
-  ProductTransaction(
-      {required this.productName, required this.amount, this.price});
+  ProductInfo({required this.productName, required this.quantity, this.price});
 
-  factory ProductTransaction.fromJson(dynamic json) {
-    return ProductTransaction(
+  factory ProductInfo.fromJson(dynamic json) {
+    return ProductInfo(
       productName: json['productName'],
       price: json['price'],
-      amount: json['amount'],
+      quantity: json['quantity'],
     );
   }
 
@@ -18,7 +17,7 @@ class ProductTransaction {
     final map = <String, dynamic>{};
     map['productName'] = productName;
     map['price'] = price;
-    map['amount'] = amount;
+    map['quantity'] = quantity;
     return map;
   }
 }

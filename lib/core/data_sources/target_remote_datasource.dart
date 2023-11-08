@@ -28,7 +28,7 @@ class TargetRemoteDataSourceImpl extends TargetRemoteDataSource {
     List<SaleTarget> targetList = [];
     DocumentSnapshot docSnapshot =
         await targetCollection.doc('targetList').get();
-    if (docSnapshot.exists) {
+    if (!docSnapshot.exists) {
       throw Exception();
     }
     Map orderMap = docSnapshot.data() as Map;

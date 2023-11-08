@@ -1,6 +1,8 @@
 import 'package:cholay_ice_sale/commom/themes/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import '../../commom/constants/route_constants.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StatelessWidget {
@@ -8,6 +10,9 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: AppColor.primaryColor,
+    ));
     final homeViewModel = Provider.of<HomeViewModel>(context);
 
     Widget tabItem(var pos, String title, var image, var size) {
@@ -24,7 +29,7 @@ class HomeView extends StatelessWidget {
                 'assets/images/$image.png',
                 color: homeViewModel.selectedPos == pos
                     ? AppColor.primaryColor
-                    : Colors.black54,
+                    : AppColor.secondaryColor,
                 width: size,
               ),
               Text(
@@ -34,7 +39,7 @@ class HomeView extends StatelessWidget {
                   //height: 0.7,
                   color: homeViewModel.selectedPos == pos
                       ? AppColor.primaryColor
-                      : Colors.black54,
+                      : AppColor.secondaryColor,
                 ),
               )
             ],
@@ -76,11 +81,11 @@ class HomeView extends StatelessWidget {
           FloatingActionButton(
             backgroundColor: AppColor.primaryColor,
             onPressed: () {
-              // Navigator.of(context).push(MaterialPageRoute(
-              //   builder: (context) => AddNewTransactionScreen(),
-              // ));
+              Navigator.of(context).pushNamed(
+                RouteList.salePrintScreen,
+              );
             },
-            child: const Icon(Icons.add, color: Colors.white),
+            child: const Icon(Icons.print_outlined, color: Colors.white),
           ),
         ],
       ),

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "686803358585",
+    "project_id": "cholay-ice-sale",
+    "storage_bucket": "cholay-ice-sale.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686803358585:android:fa64cdc476e2fa2debd5a8",
+        "android_client_info": {
+          "package_name": "com.example.cholay_ice_sale"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmE_zqCDU_LPQKn6sPHmF6AaWip_aAkGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

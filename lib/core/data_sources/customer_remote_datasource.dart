@@ -15,11 +15,15 @@ class CustomerRemoteDataSourceImpl extends CustomerRemoteDataSource {
     List<Customer> customerList = [];
     DocumentSnapshot docSnapshot =
         await customerCollection.doc('customerList').get();
-    if (docSnapshot.exists) {
+    if (!docSnapshot.exists) {
       throw Exception();
     }
-    Map cusMap = docSnapshot.data() as Map;
-    customerList = cusMap['customerList'];
+    Map<String, dynamic> cusMap = docSnapshot.data() as Map<String, dynamic>;
+
+    customerList = cusMap['customerList']
+        .map((cus) => Customer.fromJson(cus))
+        .toList()
+        .cast<Customer>();
     return customerList;
   }
 
