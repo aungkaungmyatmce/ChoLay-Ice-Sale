@@ -16,7 +16,6 @@ class TransactionsViewModel with ChangeNotifier {
 
   void changeMonth(DateTime month) {
     selectedMonth = month;
-    //getData();
     notifyListeners();
   }
 
@@ -25,7 +24,6 @@ class TransactionsViewModel with ChangeNotifier {
       RouteList.addTransactionsScreen,
     );
     if (data == true) {
-      print(data);
       notifyListeners();
     }
   }

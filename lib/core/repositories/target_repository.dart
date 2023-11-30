@@ -33,7 +33,7 @@ class TargetRepositoryImpl extends TargetRepository {
       {required DateTime tranMonth}) async {
     try {
       final list =
-          await remoteDataSource.getSaleTargetList(tranMonth: tranMonth);
+          await remoteDataSource.getSaleTargetList(targetMonth: tranMonth);
       return Right(list);
     } on SocketException {
       return Left(AppError(AppErrorType.network));
@@ -62,7 +62,7 @@ class TargetRepositoryImpl extends TargetRepository {
       {required DateTime tranMonth}) async {
     try {
       final list =
-          await remoteDataSource.getTransportTargetList(tranMonth: tranMonth);
+          await remoteDataSource.getTransportTargetList(targetMonth: tranMonth);
       return Right(list);
     } on SocketException {
       return Left(AppError(AppErrorType.network));
@@ -77,7 +77,7 @@ class TargetRepositoryImpl extends TargetRepository {
       required List<TransportTarget> targetList}) async {
     try {
       final response = await remoteDataSource.updateTransportTargetList(
-          tranMonth: tranMonth, targetList: targetList);
+          targetMonth: tranMonth, targetList: targetList);
       return Right(response);
     } on SocketException {
       return Left(AppError(AppErrorType.network));
@@ -91,7 +91,7 @@ class TargetRepositoryImpl extends TargetRepository {
       {required DateTime tranMonth}) async {
     try {
       final list =
-          await remoteDataSource.getCustomerTargetList(tranMonth: tranMonth);
+          await remoteDataSource.getCustomerTargetList(targetMonth: tranMonth);
       return Right(list);
     } on SocketException {
       return Left(AppError(AppErrorType.network));
@@ -106,7 +106,7 @@ class TargetRepositoryImpl extends TargetRepository {
       required List<CustomerTarget> targetList}) async {
     try {
       final response = await remoteDataSource.updateCustomerTargetList(
-          tranMonth: tranMonth, targetList: targetList);
+          targetMonth: tranMonth, targetList: targetList);
       return Right(response);
     } on SocketException {
       return Left(AppError(AppErrorType.network));

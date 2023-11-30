@@ -75,4 +75,29 @@ class LocationService {
 
     return earthRadius * c;
   }
+
+  bool isPositionInRange(
+      Position userPosition, Position targetPosition, double radiusMeters) {
+    const double earthRadius = 6371000; // Earth radius in meters
+
+    // Convert degrees to radians
+    double toRadians(double degree) {
+      return degree * (pi / 180.0);
+    }
+
+    // Calculate Haversine distance
+    double haversine(double a, double b, double c, double d) {
+      double dh = toRadians(c - a);
+      double dl = toRadians(d - b);
+      double h = pow(sin(dh / 2), 2) +
+          cos(toRadians(a)) * cos(toRadians(c)) * pow(sin(dl / 2), 2);
+      double distance = 2 * atan2(sqrt(h), sqrt(1 - h));
+      return earthRadius * distance;
+    }
+
+    // Check if distance is within the specified range
+    double distance = haversine(userPosition.latitude, userPosition.longitude,
+        targetPosition.latitude, targetPosition.longitude);
+    return distance <= radiusMeters;
+  }
 }

@@ -1,20 +1,23 @@
 class TransportTarget {
-  final String startingTime;
+  final DateTime startingTime;
   final int days;
   final int targetLevel;
+  final String? pricePool;
 
   TransportTarget({
     required this.startingTime,
     required this.days,
     required this.targetLevel,
+    required this.pricePool,
   });
 
   factory TransportTarget.fromJson(dynamic jsonData) {
     return TransportTarget(
-      startingTime: jsonData['startingTime'],
-      days: jsonData['days'],
-      targetLevel: jsonData['targetLevel'],
-    );
+        startingTime:
+            DateTime.parse(jsonData['startingTime'].toDate().toString()),
+        days: jsonData['days'],
+        targetLevel: jsonData['targetLevel'],
+        pricePool: jsonData['pricePool']);
   }
 
   Map<String, dynamic> toJson() {
@@ -22,6 +25,7 @@ class TransportTarget {
     map['startingTime'] = startingTime;
     map['days'] = days;
     map['targetLevel'] = targetLevel;
+    map['pricePool'] = pricePool;
     return map;
   }
 }

@@ -171,7 +171,6 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
                                         ))
                                     .toList(),
                             onSelected: (Customer cus) {
-                              print('Select');
                               widget.customerController.text = cus.name;
                               widget.productController.text =
                                   cus.buyingProduct!;
@@ -212,7 +211,7 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
                             ));
                       }).toList(),
                       onChanged: (newValue) {
-                        //widget.productController.text = newValue!;
+                        widget.productController.text = newValue!;
                         Product prod = addTransactionViewModel.productList
                             .firstWhere((prod) => prod.name == newValue);
                         widget.priceController.text = prod.price.toString();

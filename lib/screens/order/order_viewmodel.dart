@@ -34,7 +34,6 @@ class OrderViewModel with ChangeNotifier {
     response = await transactionRepository.getSaleTransactions(
         tranMonth: DateTime.now().subtract(const Duration(days: 32)));
     response.fold((l) => AppError(l), (r) {
-      print(r);
       saleTranList.addAll(r);
     });
     notifyListeners();

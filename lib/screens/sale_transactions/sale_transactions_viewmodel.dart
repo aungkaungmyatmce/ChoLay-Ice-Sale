@@ -61,6 +61,7 @@ class SaleTransactionsViewModel with ChangeNotifier {
       int totalNumber = 0;
       List<SaleTransaction> dayList =
           dayTranList.where((tran) => tran.tranDate.day == day).toList();
+      dayList.sort((a, b) => a.tranDate.compareTo(b.tranDate));
       if (dayList.isNotEmpty) {
         for (var dayTran in dayList) {
           totalSum += dayTran.totalPrice!;

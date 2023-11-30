@@ -10,4 +10,5 @@ class RouteList {
   static const String saleScreen = '/saleScreen';
   static const String targetScreen = '/targetScreen';
   static const String settingScreen = '/settingScreen';
+  static const String chartScreen = '/chartScreen';
 }

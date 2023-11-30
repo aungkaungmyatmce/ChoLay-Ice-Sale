@@ -3,6 +3,7 @@ import 'package:cholay_ice_sale/screens/add_transaction/add_transaction_screen.d
 import 'package:cholay_ice_sale/screens/home/home_screen.dart';
 import 'package:cholay_ice_sale/screens/order/order_screen.dart';
 import 'package:cholay_ice_sale/screens/printer/sale_print_screen.dart';
+import 'package:cholay_ice_sale/screens/target/widgets/chart_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../commom/constants/route_constants.dart';
@@ -18,5 +19,6 @@ class Routes {
         RouteList.saleScreen: (context) => Container(),
         RouteList.targetScreen: (context) => Container(),
         RouteList.settingScreen: (context) => Container(),
+        RouteList.chartScreen: (context) => ChartScreen(),
       };
 }

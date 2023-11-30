@@ -1,27 +1,49 @@
 class SaleTarget {
   final String productName;
-  final int targetAmount;
-  final int targetLevel;
+  final List<TargetInfo> targets;
 
   SaleTarget({
     required this.productName,
-    required this.targetAmount,
-    required this.targetLevel,
+    required this.targets,
   });
 
   factory SaleTarget.fromJson(dynamic jsonData) {
     return SaleTarget(
-      productName: jsonData['productName'],
-      targetAmount: jsonData['targetAmount'],
-      targetLevel: jsonData['targetLevel'],
-    );
+        productName: jsonData['productName'],
+        targets: jsonData['targets']
+            .map((target) => TargetInfo.fromJson(target))
+            .toList()
+            .cast<TargetInfo>());
   }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['productName'] = productName;
-    map['targetAmount'] = targetAmount;
-    map['targetLevel'] = targetLevel;
+    map['targets'] = targets;
+
+    return map;
+  }
+}
+
+class TargetInfo {
+  final int amount;
+  final int level;
+  final int? pricePool;
+
+  TargetInfo({required this.amount, required this.level, this.pricePool});
+  factory TargetInfo.fromJson(dynamic jsonData) {
+    return TargetInfo(
+      amount: jsonData['amount'],
+      level: jsonData['level'],
+      pricePool: jsonData['pricePool'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['amount'] = amount;
+    map['level'] = level;
+    map['pricePool'] = pricePool;
     return map;
   }
 }

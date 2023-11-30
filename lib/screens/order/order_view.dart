@@ -29,7 +29,7 @@ class OrderView extends StatelessWidget {
                     labelStyle: primaryTextStyle(size: 14),
                     tabs: const [
                       Tab(text: 'Orders'),
-                      Tab(text: 'Shops'),
+                      Tab(text: 'Suggestions'),
                     ]),
                 actions: [
                   IconButton(

@@ -55,9 +55,7 @@ class ExpenseTransactionsView extends StatelessWidget {
                           itemCount: dailyTranList[index]['tranList'].length,
                           itemBuilder: (context, index2) {
                             return Dismissible(
-                              key: ValueKey(dailyTranList[index]['tranList']
-                                      [index2]
-                                  .tranId),
+                              key: UniqueKey(),
                               confirmDismiss: (direction) {
                                 return confirmDeleteTran(context);
                               },
