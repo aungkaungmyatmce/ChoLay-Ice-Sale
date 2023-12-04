@@ -1,13 +1,15 @@
-import 'package:cholay_ice_sale/commom/themes/app_color.dart';
+import 'package:cholay_ice_sale/common/constants/translation_constants.dart';
+import 'package:cholay_ice_sale/common/extensions/string_extensions.dart';
+import 'package:cholay_ice_sale/common/themes/app_color.dart';
 import 'package:cholay_ice_sale/screens/expense_transactions/expense_transactions_screen.dart';
 import 'package:cholay_ice_sale/screens/transactions/transactions_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:provider/provider.dart';
-import '../../commom/constants/decoration.dart';
-import '../../commom/constants/route_constants.dart';
-import '../../commom/constants/style.dart';
+import '../../common/constants/decoration.dart';
+import '../../common/constants/route_constants.dart';
+import '../../common/constants/style.dart';
 import '../sale_transactions/sale_transactions_screen.dart';
 
 class TransactionsView extends StatefulWidget {
@@ -42,7 +44,7 @@ class _TransactionsViewState extends State<TransactionsView>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Transactions',
+                  TranslationConstants.transactions.t(context),
                   style: boldTextStyle(size: 16, color: Colors.white),
                 ),
                 Spacer(),
@@ -53,6 +55,7 @@ class _TransactionsViewState extends State<TransactionsView>
                       firstDate: DateTime(DateTime.now().year - 1, 5),
                       lastDate: DateTime(DateTime.now().year + 1, 9),
                       initialDate: transactionViewModel.selectedMonth,
+                      locale: Locale('en', 'US'),
                     ).then((date) {
                       if (date != null) {
                         transactionViewModel.changeMonth(date);
@@ -61,7 +64,7 @@ class _TransactionsViewState extends State<TransactionsView>
                   },
                   child: Align(
                     child: Container(
-                      height: 38,
+                      height: 40,
                       padding: const EdgeInsets.all(10),
                       //decoration: boxDecoration(radius: 8, showShadow: true),
                       decoration: BoxDecoration(
@@ -116,9 +119,9 @@ class _TransactionsViewState extends State<TransactionsView>
                       indicatorSize: TabBarIndicatorSize.label,
                       unselectedLabelColor: Colors.grey,
                       labelStyle: primaryTextStyle(size: 14),
-                      tabs: const [
-                        Tab(text: 'Sale'),
-                        Tab(text: 'Expense'),
+                      tabs: [
+                        Tab(text: TranslationConstants.sales.t(context)),
+                        Tab(text: TranslationConstants.expense.t(context)),
                       ]),
                   Expanded(
                     child: TabBarView(

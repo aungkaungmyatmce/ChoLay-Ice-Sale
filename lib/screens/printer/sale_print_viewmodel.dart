@@ -1,4 +1,4 @@
-import 'package:cholay_ice_sale/commom/themes/app_color.dart';
+import 'package:cholay_ice_sale/common/themes/app_color.dart';
 import 'package:cholay_ice_sale/core/models/app_error.dart';
 import 'package:cholay_ice_sale/core/models/product.dart';
 import 'package:cholay_ice_sale/core/repositories/customer_repository.dart';
@@ -33,8 +33,6 @@ class SalePrintViewModel with ChangeNotifier {
         totalController[index].text =
             (product.price! * product.quantity).toString();
       }
-    } else {
-      getCurrentPosition();
     }
   }
 
@@ -69,6 +67,7 @@ class SalePrintViewModel with ChangeNotifier {
 
     Either proResponse = await productRepository.getProductList();
     proResponse.fold((l) => AppError(l), (r) => productList = r);
+    await getCurrentPosition();
     autoSelectCustomer();
     notifyListeners();
   }
@@ -132,6 +131,7 @@ class SalePrintViewModel with ChangeNotifier {
       initialDate: DateTime.now(),
       firstDate: DateTime(2020),
       lastDate: DateTime(DateTime.now().year + 1),
+      locale: Locale('en', 'US'),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -190,6 +190,6 @@ class SalePrintViewModel with ChangeNotifier {
     printerService.printReceipt(saleTranList);
     isLoading = false;
     notifyListeners();
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(true);
   }
 }

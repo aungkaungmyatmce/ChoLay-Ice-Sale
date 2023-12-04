@@ -15,27 +15,35 @@ class OrderViewModel with ChangeNotifier {
 
   List<Order> orderList = [];
   List<SaleTransaction> saleTranList = [];
+  AppError appError = AppError(AppErrorType.initial);
   OrderViewModel() {
     getOrders();
     getSaleTransactions();
   }
 
   Future<void> getOrders() async {
+    appError = AppError(AppErrorType.loading);
     Either response = await orderRepository.getOrderList();
-    response.fold((l) => AppError(l), (r) => orderList = r);
+    response.fold((l) => appError = l, (r) {
+      appError = AppError(AppErrorType.initial);
+      return orderList = r;
+    });
     orderList.sort((a, b) => a.orderTime.compareTo(b.orderTime));
     notifyListeners();
   }
 
   Future<void> getSaleTransactions() async {
+    appError = AppError(AppErrorType.loading);
     Either response = await transactionRepository.getSaleTransactions(
         tranMonth: DateTime.now());
-    response.fold((l) => AppError(l), (r) => saleTranList = r);
+    response.fold((l) => appError = l, (r) => saleTranList = r);
+
     response = await transactionRepository.getSaleTransactions(
-        tranMonth: DateTime.now().subtract(const Duration(days: 32)));
-    response.fold((l) => AppError(l), (r) {
+        tranMonth: DateTime.now().subtract(const Duration(days: 30)));
+    response.fold((l) => appError = l, (r) {
       saleTranList.addAll(r);
     });
+
     notifyListeners();
   }
 
@@ -77,6 +85,7 @@ class OrderViewModel with ChangeNotifier {
           }
         }
       }
+
       if (numList.isNotEmpty) {
         if (numList.length > 4) {
           numList = numList.getRange(0, 4).toList();
@@ -126,6 +135,7 @@ class OrderViewModel with ChangeNotifier {
 
     shopsToCallList
         .sort((a, b) => a['day difference'].compareTo(b['day difference']));
+
     return shopsToCallList;
   }
 }

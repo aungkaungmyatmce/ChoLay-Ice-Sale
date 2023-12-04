@@ -19,7 +19,7 @@ class SaleTarget {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['productName'] = productName;
-    map['targets'] = targets;
+    map['targets'] = targets.map((target) => target.toJson());
 
     return map;
   }

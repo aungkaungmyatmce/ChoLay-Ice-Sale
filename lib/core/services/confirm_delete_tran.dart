@@ -1,4 +1,4 @@
-import 'package:cholay_ice_sale/commom/constants/style.dart';
+import 'package:cholay_ice_sale/common/constants/style.dart';
 import 'package:flutter/material.dart';
 
 Future<bool> confirmDeleteTran(BuildContext context) async {
@@ -9,13 +9,13 @@ Future<bool> confirmDeleteTran(BuildContext context) async {
       content: Text('ဖျက်မှာသေချာပီလား ?', style: secondaryTextStyle()),
       actions: <Widget>[
         TextButton(
-          child: Text('No'),
+          child: Text('No', style: secondaryTextStyle()),
           onPressed: () {
             Navigator.of(context).pop(false);
           },
         ),
         TextButton(
-          child: Text('Yes'),
+          child: Text('Yes', style: secondaryTextStyle()),
           onPressed: () {
             Navigator.of(context).pop(true);
 

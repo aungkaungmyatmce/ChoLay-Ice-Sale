@@ -1,4 +1,4 @@
-import 'package:cholay_ice_sale/commom/themes/app_color.dart';
+import 'package:cholay_ice_sale/common/themes/app_color.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

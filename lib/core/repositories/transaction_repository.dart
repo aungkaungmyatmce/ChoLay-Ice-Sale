@@ -80,7 +80,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     } on SocketException {
       return Left(AppError(AppErrorType.network));
     } on Exception {
-      return Left(AppError(AppErrorType.empty));
+      return Left(AppError(AppErrorType.database));
     }
   }
 

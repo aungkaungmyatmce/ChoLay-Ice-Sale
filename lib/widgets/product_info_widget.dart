@@ -1,8 +1,10 @@
+import 'package:cholay_ice_sale/common/constants/translation_constants.dart';
+import 'package:cholay_ice_sale/common/extensions/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cholay_ice_sale/core/models/product.dart';
-import '../commom/constants/decoration.dart';
-import '../commom/constants/style.dart';
+import '../common/constants/decoration.dart';
+import '../common/constants/style.dart';
 import '../screens/printer/sale_print_viewmodel.dart';
 
 class ProductInfoWidget extends StatefulWidget {
@@ -50,7 +52,7 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
-                hint: Text('Product'),
+                hint: Text(TranslationConstants.product.t(context)),
                 items: salePrintViewModel.productList.map((Product product) {
                   return DropdownMenuItem(
                     value: product.name,
@@ -77,14 +79,14 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
           ),
           SizedBox(
             height: 50,
-            width: 65,
+            width: 60,
             child: TextField(
               focusNode: _amountFocusNode,
               controller: widget.amountController,
               keyboardType: TextInputType.number,
               style: secondaryTextStyle(),
-              decoration: const InputDecoration(
-                hintText: 'Amount',
+              decoration: InputDecoration(
+                hintText: TranslationConstants.amount.t(context),
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,
@@ -104,13 +106,13 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
           ),
           SizedBox(
             height: 50,
-            width: 65,
+            width: 70,
             child: TextField(
                 controller: widget.priceController,
                 keyboardType: TextInputType.number,
                 style: secondaryTextStyle(),
-                decoration: const InputDecoration(
-                  hintText: 'Price',
+                decoration: InputDecoration(
+                  hintText: TranslationConstants.price.t(context),
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
@@ -130,13 +132,13 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
           ),
           SizedBox(
             height: 50,
-            width: 65,
+            width: 70,
             child: TextField(
               controller: widget.totalController,
               keyboardType: TextInputType.number,
               style: secondaryTextStyle(),
               decoration: const InputDecoration(
-                hintText: 'Total',
+                hintText: 'စုစုပေါင်း',
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,

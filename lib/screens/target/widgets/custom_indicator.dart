@@ -1,18 +1,22 @@
-import 'package:cholay_ice_sale/commom/constants/style.dart';
-import 'package:cholay_ice_sale/commom/themes/app_color.dart';
+import 'package:cholay_ice_sale/common/constants/style.dart';
+import 'package:cholay_ice_sale/common/themes/app_color.dart';
 import 'package:flutter/material.dart';
 
 class CustomProgressIndicator extends StatelessWidget {
   final int currentLevel;
   final List<int> targetLevels;
+  final String? label;
 
-  CustomProgressIndicator(
-      {required this.currentLevel, required this.targetLevels});
+  const CustomProgressIndicator(
+      {super.key,
+      required this.currentLevel,
+      required this.targetLevels,
+      this.label});
 
   @override
   Widget build(BuildContext context) {
     double progress = (currentLevel / targetLevels.last).clamp(0.0, 1.0);
-
+    String labelText = label ?? '';
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -26,7 +30,7 @@ class CustomProgressIndicator extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: LinearProgressIndicator(
                       minHeight: 10,
                       value: progress,
@@ -40,9 +44,10 @@ class CustomProgressIndicator extends StatelessWidget {
                     Positioned(
                       top: 0,
                       left: ((targetLevels[i] / targetLevels.last) *
-                              (availableWidth - 30)) +
-                          7,
+                              (availableWidth - 40)) +
+                          13,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             targetLevels[i].toString(),
@@ -67,21 +72,23 @@ class CustomProgressIndicator extends StatelessWidget {
                   Positioned(
                     top: 45,
                     left: ((currentLevel / targetLevels.last) *
-                            (availableWidth - 30)) +
+                            (availableWidth - 40)) +
+                        8,
+                    child: Icon(
+                      Icons.arrow_downward,
+                      size: 20,
+                      color: AppColor.secondaryColor,
+                    ),
+                  ),
+                  Positioned(
+                    top: 65,
+                    left: ((currentLevel / targetLevels.last) *
+                            (availableWidth - 40)) +
                         3,
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.arrow_downward,
-                          size: 20,
-                          color: AppColor.secondaryColor,
-                        ),
-                        Text(
-                          currentLevel.toString(),
-                          style: secondaryTextStyle(
-                              size: 11, color: AppColor.secondaryColor),
-                        ),
-                      ],
+                    child: Text(
+                      '${currentLevel.toString()} $labelText',
+                      style: secondaryTextStyle(
+                          size: 11, color: AppColor.secondaryColor),
                     ),
                   ),
 

@@ -1,8 +1,10 @@
-import 'package:cholay_ice_sale/commom/themes/app_color.dart';
+import 'package:cholay_ice_sale/common/extensions/string_extensions.dart';
+import 'package:cholay_ice_sale/common/themes/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../../commom/constants/route_constants.dart';
+import '../../common/constants/route_constants.dart';
+import '../../common/constants/translation_constants.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StatelessWidget {
@@ -69,11 +71,15 @@ class HomeView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  tabItem(0, 'Orders', 'home', 20.0),
-                  tabItem(1, 'Sales', 'stock', 22.0),
+                  tabItem(
+                      0, TranslationConstants.orders.t(context), 'home', 20.0),
+                  tabItem(
+                      1, TranslationConstants.sales.t(context), 'stock', 22.0),
                   Container(width: 45, height: 45),
-                  tabItem(2, 'Target', 'tran_history', 20.0),
-                  tabItem(3, 'Setting', 'setting', 20.0),
+                  tabItem(2, TranslationConstants.targets.t(context),
+                      'tran_history', 20.0),
+                  tabItem(3, TranslationConstants.setting.t(context), 'setting',
+                      20.0),
                 ],
               ),
             ),

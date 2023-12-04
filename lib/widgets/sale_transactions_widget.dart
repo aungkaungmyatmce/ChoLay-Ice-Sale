@@ -1,9 +1,9 @@
-import 'package:cholay_ice_sale/commom/themes/app_color.dart';
+import 'package:cholay_ice_sale/common/themes/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../commom/constants/decoration.dart';
-import '../commom/constants/style.dart';
+import '../common/constants/decoration.dart';
+import '../common/constants/style.dart';
 import '../core/services/confirm_delete_tran.dart';
 import '../screens/transactions/transactions_viewmodel.dart';
 

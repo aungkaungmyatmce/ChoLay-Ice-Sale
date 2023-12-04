@@ -13,7 +13,7 @@ class ExpenseTransactionsViewModel with ChangeNotifier {
 
   List<ExpenseTransaction> expenseTransactionList = [];
   DateTime? selectedMonth = DateTime.now();
-  bool isLoading = false;
+  AppError appError = AppError(AppErrorType.initial);
   ExpenseTransactionsViewModel() {
     getData();
   }
@@ -24,16 +24,14 @@ class ExpenseTransactionsViewModel with ChangeNotifier {
   }
 
   Future<void> getData() async {
+    appError = AppError(AppErrorType.loading);
+    notifyListeners();
     Either expenseResponse = await transactionRepository.getExpenseTransactions(
         tranMonth: selectedMonth!);
-    expenseResponse.fold(
-        (l) => AppError(l.appErrorType), (r) => expenseTransactionList = r);
-    notifyListeners();
-  }
-
-  void changeMonth(DateTime month) {
-    selectedMonth = month;
-    getData();
+    expenseResponse.fold((l) => appError = l, (r) {
+      appError = AppError(AppErrorType.initial);
+      return expenseTransactionList = r;
+    });
     notifyListeners();
   }
 

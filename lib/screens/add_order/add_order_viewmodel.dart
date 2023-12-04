@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart' hide Order;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../commom/themes/app_color.dart';
+import '../../common/themes/app_color.dart';
 import '../../core/models/app_error.dart';
 import '../../core/models/customer.dart';
 import '../../core/models/product.dart';
@@ -88,6 +88,7 @@ class AddOrderViewModel with ChangeNotifier {
       initialDate: DateTime.now(),
       firstDate: DateTime(2020),
       lastDate: DateTime(DateTime.now().year + 1),
+      locale: Locale('en', 'US'),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -136,6 +137,6 @@ class AddOrderViewModel with ChangeNotifier {
     await orderRepository.addOrder(order: order);
     isLoading = false;
     notifyListeners();
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(true);
   }
 }

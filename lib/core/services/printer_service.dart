@@ -2,7 +2,6 @@ import 'package:blue_print_pos/blue_print_pos.dart';
 import 'package:blue_print_pos/models/blue_device.dart';
 import 'package:blue_print_pos/receipt/receipt.dart';
 import 'package:bluetooth_print/bluetooth_print.dart';
-import 'package:cholay_ice_sale/core/models/transactions/product_transaction.dart';
 import 'package:cholay_ice_sale/core/models/transactions/sale_transaction.dart';
 import 'package:esc_pos_utils_plus/esc_pos_utils.dart';
 import 'package:flutter/material.dart';
@@ -137,10 +136,10 @@ mixin PrinterHandler {
   ) async {
     final name = 'ချိုလေး';
     final businessType = "ရေသန့်ရေခဲ";
-    final phoneOne = "09-780089846 ";
+    final phoneOne = "09-969815183 ";
     final phoneTwo = "09-793388991";
     final address = "အနီးစခန်း ပြင်ဦးလွင်";
-    final closeText = "closeText";
+    final closeText = "ကျေးဇူးတင်ပါသည်";
     final paperSizeString = "58";
     final paperSize = paperSizeString == "58" ? PaperSize.mm58 : PaperSize.mm80;
     int totalPrice = 0;
@@ -342,9 +341,9 @@ class NiceBarReceipt extends ReceiptSectionText {
 <div class="center" style="font-size: 1em;text-align:center;">$address</div>
 <br>
 
-<div class="alignLeft" style="font-size:1.2em">Ph : $phoneOne , $phoneTwo</div>
+<div class="alignLeft" style="font-size:1.3em">Ph : $phoneOne , $phoneTwo</div>
 
-<div class="alignLeft" style="font-size:1.2em"><span>Date :  ${DateFormat("d/M/yyy hh:mm").format(created)}</span></div>
+<div class="alignLeft" style="font-size:1.2em"><span>Date :  ${DateFormat("d/M/yyy   hh:mm a").format(created)}</span></div>
 
 <div class="alignLeft" style="font-size:1.2em"><span> $tableNumber</span></div>
 
@@ -354,9 +353,9 @@ class NiceBarReceipt extends ReceiptSectionText {
   <table style="width:100%;">
       <thead style="border-collapse: collapse; border-bottom: 1px solid red">
         <tr>
-          <th style="width: 40%; text-align: start;font-size:1.1em;">Item</th>
-          <th style="width: 30%; text-align: center;font-size:1.1em;">Qty</th>
-          <th style="width: 30%; text-align: end;font-size:1.1em;">Price</th>
+          <th style="width: 40%; text-align: start;font-size:1.3em;">Item</th>
+          <th style="width: 30%; text-align: center;font-size:1.3em;">Qty</th>
+          <th style="width: 30%; text-align: end;font-size:1.3em;">Price</th>
         </tr>
       </thead>
       <tbody>
@@ -401,16 +400,16 @@ class NiceBarReceipt extends ReceiptSectionText {
     }
 
     return '''<tr>
-          <td style="text-align: start;font-weight:bold;margin-right:20px;">${product.productName}</td>
-          <td style="text-align: center;font-weight:bold;">${isWithChildren ? "Group" : "${product.quantity}x${product.price}"}</td>
-          <td style="text-align: end;font-weight:bold;">${NumberFormat().format(isWithChildren ? withChildrenPrice : singlePrice)}</td>
+          <td style="text-align: start;font-size:1.3em;font-weight:bold;margin-right:20px;">${product.productName}</td>
+          <td style="text-align: center;font-size:1.3em;font-weight:bold;">${isWithChildren ? "Group" : "${product.quantity}x${product.price}"}</td>
+          <td style="text-align: end;font-size:1.3em;font-weight:bold;">${NumberFormat().format(isWithChildren ? withChildrenPrice : singlePrice)}</td>
         </tr>''';
   }
 
   String getMetaHtml(String name, String value) {
     return '''<div class="spaceBetween">
-      <span >$name</span>
-      <span>$value</span>
+      <span style="font-size: 1.3em;">$name</span>
+      <span style="font-size: 1.3em;">$value</span>
     </div>''';
   }
 

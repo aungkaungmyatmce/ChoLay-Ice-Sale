@@ -1,4 +1,6 @@
-import 'package:cholay_ice_sale/commom/themes/app_color.dart';
+import 'package:cholay_ice_sale/common/constants/translation_constants.dart';
+import 'package:cholay_ice_sale/common/extensions/string_extensions.dart';
+import 'package:cholay_ice_sale/common/themes/app_color.dart';
 import 'package:cholay_ice_sale/core/services/printer_service.dart';
 import 'package:cholay_ice_sale/core/services/ui_helper.dart';
 import 'package:cholay_ice_sale/screens/printer/sale_print_viewmodel.dart';
@@ -6,8 +8,8 @@ import 'package:cholay_ice_sale/widgets/product_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../../commom/constants/decoration.dart';
-import '../../commom/constants/style.dart';
+import '../../common/constants/decoration.dart';
+import '../../common/constants/style.dart';
 import '../../widgets/connect_printer.dart';
 
 class SalePrintView extends StatelessWidget {
@@ -43,7 +45,7 @@ class SalePrintView extends StatelessWidget {
                               color: AppColor.secondaryColor,
                             )),
                         Text(
-                          'Print',
+                          TranslationConstants.print.t(context),
                           style: boldTextStyle(
                               size: 16, color: AppColor.secondaryColor),
                         ),
@@ -71,7 +73,7 @@ class SalePrintView extends StatelessWidget {
                         }),
                         const SizedBox(width: 20),
                         Text(
-                          'Save',
+                          TranslationConstants.addToSales.t(context),
                           style: boldTextStyle(
                               size: 14, color: AppColor.secondaryColor),
                         ),
@@ -115,8 +117,10 @@ class SalePrintView extends StatelessWidget {
                                         style: boldTextStyle(
                                             color: AppColor.secondaryColor,
                                             size: 16),
-                                        decoration: const InputDecoration(
-                                          hintText: 'Shop Name',
+                                        decoration: InputDecoration(
+                                          hintText: TranslationConstants
+                                              .shopName
+                                              .t(context),
                                           border: InputBorder.none,
                                           enabledBorder: InputBorder.none,
                                           focusedBorder: InputBorder.none,
@@ -245,7 +249,9 @@ class SalePrintView extends StatelessWidget {
                                     if (!salePrintViewModel
                                         .printerService.connected) {
                                       UIHelper.showSuccessFlushBar(
-                                          context, 'Connect the printer',
+                                          context,
+                                          TranslationConstants.connectThePrinter
+                                              .t(context),
                                           icon: Icons.print_outlined,
                                           color: Colors.red);
                                     } else {
@@ -269,7 +275,9 @@ class SalePrintView extends StatelessWidget {
                                     child: CircularProgressIndicator(
                                         color: Colors.white),
                                   )
-                                : Text('Print'),
+                                : Text(
+                                    'Print',
+                                  ),
                           )
                         ],
                       ),

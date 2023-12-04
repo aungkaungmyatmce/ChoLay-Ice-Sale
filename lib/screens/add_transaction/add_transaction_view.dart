@@ -1,4 +1,4 @@
-import 'package:cholay_ice_sale/commom/themes/app_color.dart';
+import 'package:cholay_ice_sale/common/themes/app_color.dart';
 import 'package:cholay_ice_sale/screens/add_transaction/add_expense_screen.dart';
 import 'package:cholay_ice_sale/screens/add_transaction/add_sale_screen.dart';
 import 'package:cholay_ice_sale/screens/add_transaction/add_transaction_viewmodel.dart';
@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../commom/constants/decoration.dart';
-import '../../commom/constants/style.dart';
+import '../../common/constants/decoration.dart';
+import '../../common/constants/style.dart';
 
 class AddTransactionView extends StatefulWidget {
   const AddTransactionView({Key? key}) : super(key: key);
@@ -57,7 +57,7 @@ class _AddTransactionViewState extends State<AddTransactionView>
                   onTap: () => addTransactionViewModel.datePick(context),
                   child: Align(
                     child: Container(
-                      height: 38,
+                      height: 40,
                       padding: const EdgeInsets.all(10),
                       //decoration: boxDecoration(radius: 8, showShadow: true),
                       // decoration: boxDecorationRoundedWithShadow(20

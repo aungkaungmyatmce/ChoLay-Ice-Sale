@@ -1,9 +1,11 @@
+import 'package:cholay_ice_sale/common/extensions/string_extensions.dart';
 import 'package:cholay_ice_sale/screens/add_order/add_order_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cholay_ice_sale/core/models/product.dart';
-import '../commom/constants/decoration.dart';
-import '../commom/constants/style.dart';
+import '../common/constants/decoration.dart';
+import '../common/constants/style.dart';
+import '../common/constants/translation_constants.dart';
 import '../screens/printer/sale_print_viewmodel.dart';
 
 class OrderInfoWidget extends StatefulWidget {
@@ -51,7 +53,7 @@ class _OrderInfoWidgetState extends State<OrderInfoWidget> {
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
-                hint: Text('Product'),
+                hint: Text(TranslationConstants.product.t(context)),
                 items: addOrderViewModel.productList.map((Product product) {
                   return DropdownMenuItem(
                     value: product.name,
@@ -84,8 +86,8 @@ class _OrderInfoWidgetState extends State<OrderInfoWidget> {
               controller: widget.amountController,
               keyboardType: TextInputType.number,
               style: secondaryTextStyle(),
-              decoration: const InputDecoration(
-                hintText: 'Amount',
+              decoration: InputDecoration(
+                hintText: TranslationConstants.amount.t(context),
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,

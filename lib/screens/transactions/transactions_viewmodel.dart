@@ -4,7 +4,7 @@ import 'package:cholay_ice_sale/core/repositories/transaction_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../commom/constants/route_constants.dart';
+import '../../common/constants/route_constants.dart';
 import '../../di/get_it.dart';
 
 class TransactionsViewModel with ChangeNotifier {

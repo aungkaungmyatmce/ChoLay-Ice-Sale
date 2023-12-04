@@ -1,10 +1,10 @@
-import 'package:cholay_ice_sale/commom/themes/app_color.dart';
+import 'package:cholay_ice_sale/common/themes/app_color.dart';
 import 'package:cholay_ice_sale/core/models/product.dart';
 import 'package:cholay_ice_sale/screens/add_transaction/add_transaction_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../commom/constants/decoration.dart';
-import '../../commom/constants/style.dart';
+import '../../common/constants/decoration.dart';
+import '../../common/constants/style.dart';
 import '../../core/models/customer.dart';
 
 class AddSaleScreen extends StatelessWidget {
@@ -163,7 +163,7 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
                               Icons.expand_more,
                             ),
                             itemBuilder: (context) =>
-                                addTransactionViewModel.customerList
+                                addTransactionViewModel.sortedCustomerList
                                     .map((customer) => PopupMenuItem(
                                           child: Text(customer.name,
                                               style: secondaryTextStyle()),

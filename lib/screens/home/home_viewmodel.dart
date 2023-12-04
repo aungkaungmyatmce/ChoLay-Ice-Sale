@@ -1,4 +1,5 @@
 import 'package:cholay_ice_sale/screens/order/order_screen.dart';
+import 'package:cholay_ice_sale/screens/setting/setting_view.dart';
 import 'package:cholay_ice_sale/screens/target/target_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,7 @@ class HomeViewModel with ChangeNotifier {
       OrderScreen(),
       TransactionsScreen(),
       TargetScreen(),
-      Container(color: Colors.yellow),
+      SettingScreen(),
     ];
     list = await productRemoteDataSourceImpl.getProductList();
   }

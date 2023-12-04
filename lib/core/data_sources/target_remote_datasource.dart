@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../models/targets/customer_target.dart';
@@ -7,14 +8,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class TargetRemoteDataSource {
   Future<List<SaleTarget>> getSaleTargetList({required DateTime targetMonth});
-  Future<void> updateSaleTargetList(
-      {required DateTime tranMonth, required List<SaleTarget> targetList});
+  Future<void> updateSaleTargetList({required List<SaleTarget> targetList});
 
   Future<List<TransportTarget>> getTransportTargetList(
       {required DateTime targetMonth});
   Future<void> updateTransportTargetList(
-      {required DateTime targetMonth,
-      required List<TransportTarget> targetList});
+      {required List<TransportTarget> targetList});
 
   Future<List<CustomerTarget>> getCustomerTargetList(
       {required DateTime targetMonth});
@@ -48,9 +47,31 @@ class TargetRemoteDataSourceImpl extends TargetRemoteDataSource {
 
   @override
   Future<void> updateSaleTargetList(
-      {required DateTime tranMonth, required List<SaleTarget> targetList}) {
-    // TODO: implement updateSaleTargetList
-    throw UnimplementedError();
+      {required List<SaleTarget> targetList}) async {
+    var response;
+    DocumentSnapshot docSnapshot = await targetCollection
+        .doc('saleTarget')
+        .collection('targets')
+        .doc(DateFormat.yMMM().format(DateTime.now()).toString())
+        .get();
+    if (docSnapshot.exists) {
+      await targetCollection
+          .doc('saleTarget')
+          .collection('targets')
+          .doc(DateFormat.yMMM().format(DateTime.now()).toString())
+          .update({
+        'targets': targetList.map((target) => target.toJson()).toList(),
+      });
+    } else {
+      await targetCollection
+          .doc('saleTarget')
+          .collection('targets')
+          .doc(DateFormat.yMMM().format(DateTime.now()).toString())
+          .set({
+        'targets': targetList.map((target) => target.toJson()).toList(),
+      });
+    }
+    return response;
   }
 
   @override
@@ -75,10 +96,32 @@ class TargetRemoteDataSourceImpl extends TargetRemoteDataSource {
 
   @override
   Future<void> updateTransportTargetList(
-      {required DateTime targetMonth,
-      required List<TransportTarget> targetList}) {
-    // TODO: implement updateTransportTargetList
-    throw UnimplementedError();
+      {required List<TransportTarget> targetList}) async {
+    var response;
+
+    DocumentSnapshot docSnapshot = await targetCollection
+        .doc('transportTarget')
+        .collection('targets')
+        .doc(DateFormat.yMMM().format(DateTime.now()).toString())
+        .get();
+    if (docSnapshot.exists) {
+      await targetCollection
+          .doc('transportTarget')
+          .collection('targets')
+          .doc(DateFormat.yMMM().format(DateTime.now()).toString())
+          .update({
+        'targets': targetList.map((target) => target.toJson()).toList(),
+      });
+    } else {
+      await targetCollection
+          .doc('transportTarget')
+          .collection('targets')
+          .doc(DateFormat.yMMM().format(DateTime.now()).toString())
+          .set({
+        'targets': targetList.map((target) => target.toJson()).toList(),
+      });
+    }
+    return response;
   }
 
   @override

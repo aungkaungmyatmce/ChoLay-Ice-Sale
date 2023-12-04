@@ -1,0 +1,49 @@
+{
+
+  "orders": "Orders",
+  "suggestCustomers" : "Shop Suggestions",
+  "noOrders": "No Orders",
+  "addOrder": "Add Order",
+  "shopName": "Shop Name",
+  "product": "Product",
+  "lastOrder": "Last Order",
+  "orderHabit": "Order Habit",
+  "yesterday": "Yesterday",
+  "everyday": "Everyday",
+
+  "transactions": "Transactions",
+  "sales": "Sales",
+  "expense": "Expense",
+
+  "targets": "Targets",
+  "routes": "Routes",
+  "targetTransport": "Target Transport",
+  "level": "Level",
+  "current": "Current",
+  "totalShopsSold": "Total Shops Sold",
+  "deliStartingTime": "Deli Start Time",
+  "award": "Award",
+  "all": "All",
+  "chart": "Chart",
+  "summary": "Summary",
+  "days": "Days",
+
+  "setting": "Setting",
+  "customerNames": "Customer Names",
+  "products": "Products",
+  "productTargets": "Product Targets",
+  "transportTargets": "Transport Targets",
+  "statistics": "Statistics",
+  "language": "Language",
+  "logout": "Logout",
+
+  "print": "Print",
+  "printer": "Printer",
+  "connectThePrinter": "Connect the printer",
+  "turnOnBluetooth": "Turn On Bluetooth",
+  "addToSales": "Add Sales",
+  "save": "Save",
+  "amount": "Amount",
+  "price": "Price"
+
+}

@@ -35,9 +35,9 @@ class TransactionRemoteDataSourceImpl extends TransactionRemoteDataSource {
         .get();
     List docList = snapshot.docs;
 
-    // if (docList.isEmpty) {
-    //   throw Exception();
-    // }
+    if (docList.isEmpty) {
+      throw Exception();
+    }
     docList.map((doc) {
       tranList.add(SaleTransaction.fromJson(doc));
     }).toList();

@@ -1,5 +1,7 @@
-import 'package:cholay_ice_sale/commom/constants/style.dart';
-import 'package:cholay_ice_sale/commom/themes/app_color.dart';
+import 'package:cholay_ice_sale/common/constants/style.dart';
+import 'package:cholay_ice_sale/common/constants/translation_constants.dart';
+import 'package:cholay_ice_sale/common/extensions/string_extensions.dart';
+import 'package:cholay_ice_sale/common/themes/app_color.dart';
 import 'package:cholay_ice_sale/core/services/ui_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,28 +45,15 @@ class _ConnectPrinterState extends State<ConnectPrinter> {
                                 horizontal: 5, vertical: 3),
                             minimumSize: const Size(0, 30),
                           ),
-                          onPressed: () {
-                            //controller.printReceipt();
-                          },
-                          child: Text(
-                            "print",
-                            textScaleFactor: 1,
-                            style: secondaryTextStyle(
-                                size: 16, color: AppColor.primaryColor),
-                          ),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 3),
-                            minimumSize: const Size(0, 30),
-                          ),
                           onPressed: () async {
                             await controller.scan();
                             if (controller.scannedDevices.isEmpty) {
                               UIHelper.showSuccessFlushBar(
-                                  context, 'Turn on Bluetooth',
-                                  icon: Icons.bluetooth, color: Colors.black54);
+                                  context,
+                                  TranslationConstants.turnOnBluetooth
+                                      .t(context),
+                                  icon: Icons.bluetooth,
+                                  color: Colors.black54);
                             }
                           },
                           child: Text(
@@ -73,6 +62,7 @@ class _ConnectPrinterState extends State<ConnectPrinter> {
                                 size: 14, color: AppColor.primaryColor),
                           ),
                         ),
+                        SizedBox(width: 10),
                         TextButton(
                           style: TextButton.styleFrom(
                             padding: const EdgeInsets.symmetric(

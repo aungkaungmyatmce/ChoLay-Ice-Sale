@@ -1,3 +1,4 @@
+import 'package:cholay_ice_sale/core/models/app_error.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +15,7 @@ class SaleTransactionsViewModel with ChangeNotifier {
       getItInstance<TransactionRepository>();
 
   List<SaleTransaction> saleTransactionList = [];
+  AppError appError = AppError(AppErrorType.initial);
 
   bool isLoading = false;
   SaleTransactionsViewModel() {
@@ -29,7 +31,14 @@ class SaleTransactionsViewModel with ChangeNotifier {
     await for (var saleTranList in transactionRepository.saleTransactionStream(
         tranMonth: selectedMonth!)) {
       saleTransactionList = saleTranList;
-      notifyListeners();
+
+      if (saleTransactionList.isEmpty) {
+        appError = AppError(AppErrorType.database);
+        notifyListeners();
+      } else {
+        appError = AppError(AppErrorType.initial);
+        notifyListeners();
+      }
     }
 
     // Either saleResponse = await transactionRepository.getSaleTransactions(
@@ -41,9 +50,9 @@ class SaleTransactionsViewModel with ChangeNotifier {
     //     (l) => AppError(l.appErrorType), (r) => expenseTransactionList = r);
   }
 
-  void changeMonth(DateTime month) {
+  void changeMonth(DateTime month) async {
     selectedMonth = month;
-    getData();
+    await getData();
     notifyListeners();
   }
 
@@ -68,7 +77,7 @@ class SaleTransactionsViewModel with ChangeNotifier {
           totalNumber += dayTran.totalPrice!;
         }
         Map<String, dynamic> dayMap = {
-          'date': DateFormat('dd MMMM, yyyy')
+          'date': DateFormat('dd MMM, yyyy')
               .format(dayList.first.tranDate)
               .toString(),
           'tranList': dayList,

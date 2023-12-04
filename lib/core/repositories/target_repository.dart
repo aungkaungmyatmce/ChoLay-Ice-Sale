@@ -10,12 +10,12 @@ abstract class TargetRepository {
   Future<Either<AppError, List<SaleTarget>>> getSaleTargetList(
       {required DateTime tranMonth});
   Future<Either<AppError, void>> updateSaleTargetList(
-      {required DateTime tranMonth, required List<SaleTarget> targetList});
+      {required List<SaleTarget> targetList});
 
   Future<Either<AppError, List<TransportTarget>>> getTransportTargetList(
       {required DateTime tranMonth});
   Future<Either<AppError, void>> updateTransportTargetList(
-      {required DateTime tranMonth, required List<TransportTarget> targetList});
+      {required List<TransportTarget> targetList});
 
   Future<Either<AppError, List<CustomerTarget>>> getCustomerTargetList(
       {required DateTime tranMonth});
@@ -44,11 +44,10 @@ class TargetRepositoryImpl extends TargetRepository {
 
   @override
   Future<Either<AppError, void>> updateSaleTargetList(
-      {required DateTime tranMonth,
-      required List<SaleTarget> targetList}) async {
+      {required List<SaleTarget> targetList}) async {
     try {
-      final response = await remoteDataSource.updateSaleTargetList(
-          tranMonth: tranMonth, targetList: targetList);
+      final response =
+          await remoteDataSource.updateSaleTargetList(targetList: targetList);
       return Right(response);
     } on SocketException {
       return Left(AppError(AppErrorType.network));
@@ -73,11 +72,10 @@ class TargetRepositoryImpl extends TargetRepository {
 
   @override
   Future<Either<AppError, void>> updateTransportTargetList(
-      {required DateTime tranMonth,
-      required List<TransportTarget> targetList}) async {
+      {required List<TransportTarget> targetList}) async {
     try {
       final response = await remoteDataSource.updateTransportTargetList(
-          targetMonth: tranMonth, targetList: targetList);
+          targetList: targetList);
       return Right(response);
     } on SocketException {
       return Left(AppError(AppErrorType.network));

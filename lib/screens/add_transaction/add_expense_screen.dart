@@ -1,8 +1,8 @@
-import 'package:cholay_ice_sale/commom/constants/style.dart';
+import 'package:cholay_ice_sale/common/constants/style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../commom/constants/decoration.dart';
+import '../../common/constants/decoration.dart';
 import 'add_transaction_viewmodel.dart';
 
 class AddExpenseScreen extends StatelessWidget {

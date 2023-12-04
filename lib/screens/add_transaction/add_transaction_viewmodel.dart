@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../commom/themes/app_color.dart';
+import '../../common/themes/app_color.dart';
 import '../../core/models/app_error.dart';
 import '../../core/models/customer.dart';
 import '../../core/models/product.dart';
@@ -32,7 +32,9 @@ class AddTransactionViewModel with ChangeNotifier {
   List<TextEditingController> totalController = [TextEditingController()];
 
   List<Customer> customerList = [];
+  List<Customer> sortedCustomerList = [];
   List<Product> productList = [];
+  List<SaleTransaction> saleTransactionList = [];
   int totalSum = 0;
   DateTime selectedDate = DateTime.now();
   bool isLoading = false;
@@ -44,14 +46,52 @@ class AddTransactionViewModel with ChangeNotifier {
   final expenseNoteController = TextEditingController();
   final amountFocusNode = FocusNode();
   final noteFocusNode = FocusNode();
+  AppError appError = AppError(AppErrorType.initial);
 
   Future<void> getData() async {
     Either response = await customerRepository.getCustomerList();
-    response.fold((l) => AppError(l), (r) => customerList = r);
+    response.fold((l) => appError = l, (r) => customerList = r);
 
     Either proResponse = await productRepository.getProductList();
-    proResponse.fold((l) => AppError(l), (r) => productList = r);
+    proResponse.fold((l) => appError = l, (r) => productList = r);
+
+    Either tranResponse = await transactionRepository.getSaleTransactions(
+        tranMonth: DateTime.now());
+    tranResponse.fold((l) => appError = l, (r) => saleTransactionList = r);
+    sortMostBuyCustomers();
     notifyListeners();
+  }
+
+  void sortMostBuyCustomers() {
+    List<Map<String, dynamic>> customerMapList = [];
+    List<SaleTransaction> transactionList = saleTransactionList
+        .where((tran) => tran.tranDate.day == DateTime.now().day)
+        .toList();
+
+    for (var customer in customerList) {
+      int num = 0;
+      for (var tran in saleTransactionList) {
+        if (tran.customerName == customer.name) {
+          num += tran.quantity!;
+        }
+      }
+      Map<String, dynamic> cus = {
+        'name': customer,
+        'num': num,
+      };
+      customerMapList.add(cus);
+    }
+
+    customerMapList.sort((a, b) => b['num'].compareTo(a['num']));
+    sortedCustomerList =
+        customerMapList.map((cus) => cus['name'] as Customer).toList();
+
+    transactionList.forEach((tran) {
+      Customer cus =
+          sortedCustomerList.firstWhere((cus) => cus.name == tran.customerName);
+      sortedCustomerList.remove(cus);
+      sortedCustomerList.add(cus);
+    });
   }
 
   void datePick(BuildContext context) {
@@ -60,6 +100,7 @@ class AddTransactionViewModel with ChangeNotifier {
       initialDate: DateTime.now(),
       firstDate: DateTime(2020),
       lastDate: DateTime(DateTime.now().year + 1),
+      locale: Locale('en', 'US'),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: Theme.of(context).copyWith(

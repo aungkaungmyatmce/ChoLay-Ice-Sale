@@ -1,0 +1,35 @@
+{
+  "title": "مرحبا!",
+  "Message" : "هذه هي اللغة العربي",
+   "name": "မောင်မောင်",
+
+  "orders": "Orders",
+  "suggestCustomers" : "Shop Suggestions",
+  "noOrders": "No Orders",
+
+  "transactions": "Transactions",
+  "sales": "Sales",
+  "expense": "Expense",
+
+  "targets": "Targets",
+  "routes": "Routes",
+  "targetTransport": "Target Transport",
+  "level": "Level",
+  "totalShopsSold": "Total Shops Sold",
+  "award": "Award",
+  "all": "All",
+  "chart": "Chart",
+  "summary": "Summary",
+
+  "setting": "Setting",
+  "customerNames": "Customer Names",
+  "products": "Products",
+  "productTargets": "Product Targets",
+  "transportTargets": "Transport Targets",
+  "statistics": "Statistics",
+  "language": "Language",
+  "logout": "Logout"
+
+
+
+}

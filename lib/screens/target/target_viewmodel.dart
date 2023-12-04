@@ -6,7 +6,6 @@ import 'package:cholay_ice_sale/core/repositories/customer_repository.dart';
 import 'package:cholay_ice_sale/core/repositories/target_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../../core/models/targets/sale_target.dart';
 import '../../core/repositories/transaction_repository.dart';
 import '../../di/get_it.dart';
@@ -22,25 +21,38 @@ class TargetViewModel with ChangeNotifier {
   List<SaleTransaction> saleTransactionList = [];
   List<Customer> customerList = [];
   DateTime selectedMonth = DateTime.now();
-  AppError? appError;
+  AppError appError = AppError(AppErrorType.initial);
   TargetViewModel() {
     getData();
   }
 
   Future<void> getData() async {
+    saleTargetList = [];
+    transportTargetList = [];
+    saleTransactionList = [];
+    appError = AppError(AppErrorType.loading);
     Either response =
         await targetRepository.getSaleTargetList(tranMonth: selectedMonth);
     response.fold((l) => appError = l, (r) => saleTargetList = r);
+
     response =
         await targetRepository.getTransportTargetList(tranMonth: selectedMonth);
     response.fold((l) => appError = l, (r) => transportTargetList = r);
+
     response = await transactionRepository.getSaleTransactions(
         tranMonth: selectedMonth);
     response.fold((l) => appError = l, (r) => saleTransactionList = r);
+
     response = await customerRepository.getCustomerList();
     response.fold((l) => appError = l, (r) => customerList = r);
 
-    routeList();
+    if (saleTargetList.isEmpty && transportTargetList.isEmpty) {
+      appError = AppError(AppErrorType.database);
+      notifyListeners();
+    } else {
+      appError = AppError(AppErrorType.initial);
+      notifyListeners();
+    }
     notifyListeners();
   }
 
@@ -150,6 +162,11 @@ class TargetViewModel with ChangeNotifier {
       }
     }
 
+    if (dailyRouteList.isEmpty) {
+      appError = AppError(AppErrorType.database);
+    } else {
+      appError = AppError(AppErrorType.initial);
+    }
     return dailyRouteList;
   }
 }

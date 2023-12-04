@@ -2,13 +2,13 @@ class TransportTarget {
   final DateTime startingTime;
   final int days;
   final int targetLevel;
-  final String? pricePool;
+  final int? pricePool;
 
   TransportTarget({
     required this.startingTime,
     required this.days,
     required this.targetLevel,
-    required this.pricePool,
+    this.pricePool,
   });
 
   factory TransportTarget.fromJson(dynamic jsonData) {

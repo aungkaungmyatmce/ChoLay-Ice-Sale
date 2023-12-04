@@ -11,4 +11,11 @@ class RouteList {
   static const String targetScreen = '/targetScreen';
   static const String settingScreen = '/settingScreen';
   static const String chartScreen = '/chartScreen';
+  static const String customerNamesScreen = '/customerNamesScreen';
+  static const String productNamesScreen = '/productNamesScreen';
+  static const String saleTargetSettingScreen = '/SaleTargetSettingScreen';
+  static const String transportTargetSettingScreen =
+      '/transportTargetSettingScreen';
+  static const String accountingScreen = '/accountingScreen';
+  static const String languageChangeScreen = '/languageChangeScreen';
 }

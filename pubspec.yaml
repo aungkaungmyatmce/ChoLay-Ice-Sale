@@ -52,6 +52,9 @@ dependencies:
   geolocator: ^10.1.0
   permission_handler: ^11.0.1
   fl_chart: ^0.41.0
+  time_picker_sheet: ^0.0.2+1
+  shared_preferences: ^2.2.2
+  flutter_localization: ^0.1.14
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +80,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/languages/
 
 
   fonts:

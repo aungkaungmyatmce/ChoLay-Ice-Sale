@@ -1,3 +1,5 @@
+import 'package:cholay_ice_sale/common/constants/translation_constants.dart';
+import 'package:cholay_ice_sale/common/extensions/string_extensions.dart';
 import 'package:cholay_ice_sale/screens/target/widgets/custom_indicator.dart';
 import 'package:cholay_ice_sale/screens/target/widgets/routes_widget.dart';
 import 'package:cholay_ice_sale/screens/target/target_viewmodel.dart';
@@ -7,9 +9,9 @@ import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:provider/provider.dart';
 
-import '../../commom/constants/decoration.dart';
-import '../../commom/constants/style.dart';
-import '../../commom/themes/app_color.dart';
+import '../../common/constants/decoration.dart';
+import '../../common/constants/style.dart';
+import '../../common/themes/app_color.dart';
 
 class TargetView extends StatelessWidget {
   const TargetView({Key? key}) : super(key: key);
@@ -30,7 +32,7 @@ class TargetView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Transactions',
+                    TranslationConstants.transactions.t(context),
                     style: boldTextStyle(size: 16, color: Colors.white),
                   ),
                   Spacer(),
@@ -41,6 +43,7 @@ class TargetView extends StatelessWidget {
                         firstDate: DateTime(DateTime.now().year - 1, 5),
                         lastDate: DateTime(DateTime.now().year + 1, 9),
                         initialDate: targetViewModel.selectedMonth,
+                        locale: Locale('en', 'US'),
                       ).then((date) {
                         if (date != null) {
                           targetViewModel.changeMonth(date);
@@ -49,7 +52,7 @@ class TargetView extends StatelessWidget {
                     },
                     child: Align(
                       child: Container(
-                        height: 38,
+                        height: 40,
                         padding: const EdgeInsets.all(10),
                         //decoration: boxDecoration(radius: 8, showShadow: true),
                         decoration: BoxDecoration(
@@ -77,14 +80,7 @@ class TargetView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  IconButton(
-                      onPressed: () {
-                        //targetViewModel.navigate(context);
-                      },
-                      icon: Icon(
-                        Icons.add_circle_outline,
-                        color: Colors.white,
-                      ))
+                  SizedBox(width: 10),
                 ],
               ),
             ),
@@ -103,9 +99,9 @@ class TargetView extends StatelessWidget {
                         indicatorSize: TabBarIndicatorSize.label,
                         unselectedLabelColor: Colors.grey,
                         labelStyle: primaryTextStyle(size: 14),
-                        tabs: const [
-                          Tab(text: 'Targets'),
-                          Tab(text: 'Routes'),
+                        tabs: [
+                          Tab(text: TranslationConstants.targets.t(context)),
+                          Tab(text: TranslationConstants.routes.t(context)),
                         ]),
                     Expanded(
                       child: TabBarView(children: [
