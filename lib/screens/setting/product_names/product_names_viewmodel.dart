@@ -4,11 +4,16 @@ import 'package:flutter/material.dart';
 
 import '../../../core/models/app_error.dart';
 import '../../../core/models/product.dart';
+import '../../../core/models/targets/sale_target.dart';
+import '../../../core/repositories/target_repository.dart';
 import '../../../di/get_it.dart';
 
 class ProductNamesViewModel with ChangeNotifier {
   ProductRepository productRepository = getItInstance<ProductRepository>();
+  TargetRepository targetRepository = getItInstance<TargetRepository>();
+
   List<Product> productList = [];
+  List<SaleTarget> saleTargetList = [];
   AppError appError = AppError(AppErrorType.initial);
 
   ProductNamesViewModel() {
@@ -38,6 +43,11 @@ class ProductNamesViewModel with ChangeNotifier {
   Future<void> deleteProduct({required Product product}) async {
     productList.removeWhere((pro) => pro == product);
     await productRepository.updateProductList(productList: productList);
+    Either response =
+        await targetRepository.getSaleTargetList(tranMonth: DateTime.now());
+    response.fold((l) => appError = l, (r) => saleTargetList = r);
+    saleTargetList.removeWhere((target) => target.productName == product.name);
+    await targetRepository.updateSaleTargetList(targetList: saleTargetList);
     notifyListeners();
   }
 }

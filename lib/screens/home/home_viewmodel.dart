@@ -1,3 +1,4 @@
+import 'package:cholay_ice_sale/screens/dashboard/dashboard_screen.dart';
 import 'package:cholay_ice_sale/screens/order/order_screen.dart';
 import 'package:cholay_ice_sale/screens/setting/setting_view.dart';
 import 'package:cholay_ice_sale/screens/target/target_screen.dart';
@@ -26,7 +27,7 @@ class HomeViewModel with ChangeNotifier {
     pages = [
       OrderScreen(),
       TransactionsScreen(),
-      TargetScreen(),
+      DashBoardScreen(),
       SettingScreen(),
     ];
     list = await productRemoteDataSourceImpl.getProductList();

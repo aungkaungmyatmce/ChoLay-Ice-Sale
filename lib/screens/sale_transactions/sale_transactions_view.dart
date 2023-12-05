@@ -120,7 +120,7 @@ class SaleTransactionsView extends StatelessWidget {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width /
-                                                1.7,
+                                                1.6,
                                             height: 32,
                                             child: Row(
                                               mainAxisAlignment:
@@ -140,7 +140,7 @@ class SaleTransactionsView extends StatelessWidget {
                                                           size: 15)),
                                                 ),
                                                 Container(
-                                                  width: 90,
+                                                  width: 110,
                                                   height: 32,
                                                   padding: const EdgeInsets
                                                       .symmetric(

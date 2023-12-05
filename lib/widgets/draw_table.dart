@@ -16,51 +16,42 @@ class DrawTable extends StatelessWidget {
     return Container(
       width: width,
       child: DataTable(
-        columnSpacing: 35,
+        columnSpacing: 30,
         dividerThickness: 0.000001,
-        dataRowHeight: 27,
         headingRowHeight: 25,
+        dataRowMaxHeight: 35,
+        dataRowMinHeight: 20,
         columns: [
           DataColumn(
-              label: SizedBox(
-            width: width / 5,
-            child: const Text('Name',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-          )),
+              label: const Text('Name',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold))),
           if (tableDataList.first['amount'] != null)
             DataColumn(
-                label: SizedBox(
-              width: width / 5,
-              child: const Text('Amount',
-                  textAlign: TextAlign.end,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-            )),
+                label: const Text('Amount',
+                    textAlign: TextAlign.end,
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold))),
           DataColumn(
-              label: SizedBox(
-            width: width / 5,
-            child: const Text('Price',
-                textAlign: TextAlign.end,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-          )),
+              label: const Text('Price',
+                  textAlign: TextAlign.end,
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold))),
         ],
         rows: tableDataList.map((data) {
           String price = data['price'];
           return DataRow(cells: <DataCell>[
-            DataCell(SizedBox(
-              width: width / 5,
-              child: Text(data['productName'], style: secondaryTextStyle()),
-            )),
+            DataCell(
+              Text(
+                data['productName'],
+                style: secondaryTextStyle(),
+              ),
+            ),
             if (data['amount'] != null)
-              DataCell(SizedBox(
-                width: width / 5,
-                child: Text(data['amount'],
+              DataCell(
+                Text(data['amount'],
                     textAlign: TextAlign.end, style: secondaryTextStyle()),
-              )),
-            DataCell(SizedBox(
-              width: width / 5,
-              child: Text(price.formatWithCommas(),
-                  textAlign: TextAlign.end, style: secondaryTextStyle()),
-            )),
+              ),
+            DataCell(Text(price.formatWithCommas(),
+                textAlign: TextAlign.end, style: secondaryTextStyle())),
           ]);
         }).toList(),
       ),

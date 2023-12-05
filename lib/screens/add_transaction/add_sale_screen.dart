@@ -2,6 +2,7 @@ import 'package:cholay_ice_sale/common/themes/app_color.dart';
 import 'package:cholay_ice_sale/core/models/product.dart';
 import 'package:cholay_ice_sale/screens/add_transaction/add_transaction_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../common/constants/decoration.dart';
 import '../../common/constants/style.dart';
@@ -140,6 +141,7 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('${widget.num.toString()}.', style: boldTextStyle()),
+              SizedBox(width: 8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -147,8 +149,8 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
                   Stack(
                     children: [
                       SizedBox(
-                        width: 150,
-                        height: 50,
+                        width: 170,
+                        //height: 50,
                         child: TextField(
                           controller: widget.customerController,
                           style: secondaryTextStyle(),
@@ -172,110 +174,88 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
                                     .toList(),
                             onSelected: (Customer cus) {
                               widget.customerController.text = cus.name;
-                              widget.productController.text =
-                                  cus.buyingProduct!;
-                              Product pro = addTransactionViewModel.productList
-                                  .firstWhere(
+                              Product? pro = addTransactionViewModel.productList
+                                  .firstWhereOrNull(
                                       (pro) => pro.name == cus.buyingProduct);
-                              widget.priceController.text =
-                                  pro.price.toString();
-                              setState(() {});
-                              FocusScope.of(context)
-                                  .requestFocus(_amountFocusNode);
+                              if (pro != null) {
+                                widget.productController.text =
+                                    cus.buyingProduct!;
+
+                                widget.priceController.text =
+                                    pro.price.toString();
+                                setState(() {});
+                                FocusScope.of(context)
+                                    .requestFocus(_amountFocusNode);
+                              }
                             },
                           )),
                     ],
                   )
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Product', style: boldTextStyle(size: 14)),
-                  SizedBox(
-                    width: 120,
-                    height: 50,
-                    child: DropdownButtonFormField(
-                      value: widget.productController.text.isNotEmpty
-                          ? widget.productController.text
-                          : null,
-                      isExpanded: true,
-                      items: addTransactionViewModel.productList
-                          .map((Product product) {
-                        return DropdownMenuItem(
-                            value: product.name,
-                            child: Text(
-                              product.name,
-                              overflow: TextOverflow.ellipsis,
-                              style: secondaryTextStyle(),
-                            ));
-                      }).toList(),
-                      onChanged: (newValue) {
-                        widget.productController.text = newValue!;
-                        Product prod = addTransactionViewModel.productList
-                            .firstWhere((prod) => prod.name == newValue);
-                        widget.priceController.text = prod.price.toString();
-                        if (widget.priceController.text.isNotEmpty &&
-                            widget.quantityController.text.isNotEmpty) {
-                          widget.totalController.text =
-                              (int.parse(widget.priceController.text) *
-                                      int.parse(widget.quantityController.text))
-                                  .toString();
-                        }
-                        // FocusScope.of(context).requestFocus(_amountFocusNode);
-                      },
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 15),
+              SizedBox(width: 5),
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Amount', style: boldTextStyle(size: 14)),
+                    Text('Product', style: boldTextStyle(size: 14)),
                     SizedBox(
-                      height: 30,
-                      width: 65,
-                      child: TextField(
-                        focusNode: _amountFocusNode,
-                        controller: widget.quantityController,
-                        keyboardType: TextInputType.number,
-                        style: secondaryTextStyle(),
-                        decoration: const InputDecoration(),
-                        onChanged: (value) {
+                      //width: 120,
+                      //height: 50,
+                      child: DropdownButtonFormField(
+                        value: widget.productController.text.isNotEmpty
+                            ? widget.productController.text
+                            : null,
+                        isExpanded: true,
+                        items: addTransactionViewModel.productList
+                            .map((Product product) {
+                          return DropdownMenuItem(
+                              value: product.name,
+                              child: Text(
+                                product.name,
+                                overflow: TextOverflow.ellipsis,
+                                style: secondaryTextStyle(height: 1),
+                              ));
+                        }).toList(),
+                        onChanged: (newValue) {
+                          widget.productController.text = newValue!;
+                          Product prod = addTransactionViewModel.productList
+                              .firstWhere((prod) => prod.name == newValue);
+                          widget.priceController.text = prod.price.toString();
                           if (widget.priceController.text.isNotEmpty &&
-                              value.isNotEmpty) {
-                            widget.totalController.text =
-                                (int.parse(widget.priceController.text) *
-                                        int.parse(value))
-                                    .toString();
-                          } else {
-                            widget.totalController.text = '';
+                              widget.quantityController.text.isNotEmpty) {
+                            widget.totalController.text = (int.parse(
+                                        widget.priceController.text) *
+                                    int.parse(widget.quantityController.text))
+                                .toString();
                           }
+                          // FocusScope.of(context).requestFocus(_amountFocusNode);
                         },
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Price', style: boldTextStyle(size: 14)),
-                    SizedBox(
-                      height: 30,
-                      width: 65,
-                      child: TextField(
-                          controller: widget.priceController,
+            ],
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              // const Spacer(),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Amount', style: boldTextStyle(size: 14)),
+                      SizedBox(
+                        height: 30,
+                        //width: 65,
+                        child: TextField(
+                          focusNode: _amountFocusNode,
+                          controller: widget.quantityController,
                           keyboardType: TextInputType.number,
                           style: secondaryTextStyle(),
                           decoration: const InputDecoration(),
@@ -283,34 +263,69 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
                             if (widget.priceController.text.isNotEmpty &&
                                 value.isNotEmpty) {
                               widget.totalController.text =
-                                  (int.parse(widget.quantityController.text) *
+                                  (int.parse(widget.priceController.text) *
                                           int.parse(value))
                                       .toString();
                             } else {
                               widget.totalController.text = '';
                             }
-                          }),
-                    ),
-                  ],
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Total', style: boldTextStyle(size: 14)),
-                    SizedBox(
-                      height: 30,
-                      width: 65,
-                      child: TextField(
-                        controller: widget.totalController,
-                        keyboardType: TextInputType.number,
-                        style: secondaryTextStyle(),
-                        decoration: const InputDecoration(),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Price', style: boldTextStyle(size: 14)),
+                      SizedBox(
+                        height: 30,
+                        //width: 65,
+                        child: TextField(
+                            controller: widget.priceController,
+                            keyboardType: TextInputType.number,
+                            style: secondaryTextStyle(),
+                            decoration: const InputDecoration(),
+                            onChanged: (value) {
+                              if (widget.priceController.text.isNotEmpty &&
+                                  value.isNotEmpty) {
+                                widget.totalController.text =
+                                    (int.parse(widget.quantityController.text) *
+                                            int.parse(value))
+                                        .toString();
+                              } else {
+                                widget.totalController.text = '';
+                              }
+                            }),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Total', style: boldTextStyle(size: 14)),
+                      SizedBox(
+                        height: 30,
+                        // width: 65,
+                        child: TextField(
+                          controller: widget.totalController,
+                          keyboardType: TextInputType.number,
+                          style: secondaryTextStyle(),
+                          decoration: const InputDecoration(),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               //const Spacer(),

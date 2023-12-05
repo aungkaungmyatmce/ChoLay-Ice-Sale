@@ -14,12 +14,11 @@ class TargetViewModel with ChangeNotifier {
   TargetRepository targetRepository = getItInstance<TargetRepository>();
   TransactionRepository transactionRepository =
       getItInstance<TransactionRepository>();
-  CustomerRepository customerRepository = getItInstance<CustomerRepository>();
 
   List<SaleTarget> saleTargetList = [];
   List<TransportTarget> transportTargetList = [];
   List<SaleTransaction> saleTransactionList = [];
-  List<Customer> customerList = [];
+
   DateTime selectedMonth = DateTime.now();
   AppError appError = AppError(AppErrorType.initial);
   TargetViewModel() {
@@ -43,9 +42,6 @@ class TargetViewModel with ChangeNotifier {
         tranMonth: selectedMonth);
     response.fold((l) => appError = l, (r) => saleTransactionList = r);
 
-    response = await customerRepository.getCustomerList();
-    response.fold((l) => appError = l, (r) => customerList = r);
-
     if (saleTargetList.isEmpty && transportTargetList.isEmpty) {
       appError = AppError(AppErrorType.database);
       notifyListeners();
@@ -56,10 +52,9 @@ class TargetViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeMonth(DateTime month) {
+  void updateMonth(DateTime month) {
     selectedMonth = month;
     getData();
-    notifyListeners();
   }
 
   Map<String, int> productsSoldAmount() {
@@ -71,8 +66,10 @@ class TargetViewModel with ChangeNotifier {
     //productSold = saleTargetList.map((target) => target.productName).toList();
 
     saleTransactionList.forEach((tran) {
-      productSold[tran.productName] =
-          (productSold[tran.productName]! + tran.quantity);
+      if (productSold[tran.productName] != null) {
+        productSold[tran.productName] =
+            (productSold[tran.productName]! + tran.quantity);
+      }
     });
 
     return productSold;
@@ -104,69 +101,5 @@ class TargetViewModel with ChangeNotifier {
     }
 
     return targetReach;
-  }
-
-  List<Map<String, dynamic>> routeList({bool isAllList = true}) {
-    List<String> inTownCustomerList = [];
-    List<String> productNames = [];
-    Map<String, dynamic> productNameAndAmount = {};
-
-    for (var customer in customerList) {
-      if (!customer.isInAnisakhan()) {
-        inTownCustomerList.add(customer.name);
-      }
-
-      if (!productNames.contains(customer.buyingProduct) &&
-          customer.buyingProduct != null) {
-        productNames.add(customer.buyingProduct!);
-        productNameAndAmount.putIfAbsent(customer.buyingProduct!, () => 0);
-      }
-    }
-
-    List<Map<String, dynamic>> dailyRouteList = [];
-
-    for (int day = 31; day >= 0; day--) {
-      int totalNoOfCustomers = 0;
-      productNameAndAmount.forEach((key, value) {
-        productNameAndAmount[key] = 0;
-      });
-
-      List<String> cusList = [];
-      List<SaleTransaction> dayList = saleTransactionList
-          .where((tran) => tran.tranDate.day == day)
-          .toList();
-      dayList.sort((a, b) => a.tranDate.compareTo(b.tranDate));
-
-      if (dayList.isNotEmpty) {
-        for (var dayTran in dayList) {
-          if (isAllList ||
-              (!isAllList &&
-                  inTownCustomerList.contains(dayTran.customerName))) {
-            totalNoOfCustomers += dayTran.totalPrice;
-            productNameAndAmount[dayTran.productName] =
-                productNameAndAmount[dayTran.productName] + dayTran.quantity;
-
-            if (!cusList.contains(dayTran.customerName)) {
-              cusList.add(dayTran.customerName);
-            }
-          }
-        }
-
-        Map<String, dynamic> dayMap = {
-          'date': dayList.first.tranDate.subtract(Duration(minutes: 15)),
-          'totalCustomers': cusList.length,
-          'totalProducts':
-              productNameAndAmount.map((key, value) => MapEntry(key, value)),
-        };
-        dailyRouteList.add(dayMap);
-      }
-    }
-
-    if (dailyRouteList.isEmpty) {
-      appError = AppError(AppErrorType.database);
-    } else {
-      appError = AppError(AppErrorType.initial);
-    }
-    return dailyRouteList;
   }
 }

@@ -3,11 +3,13 @@ import 'package:cholay_ice_sale/core/models/product.dart';
 import 'package:cholay_ice_sale/screens/setting/customer_names/customer_names_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/constants/decoration.dart';
 import '../../../common/constants/style.dart';
 import '../../../core/models/customer.dart';
+import '../../../core/services/location_service.dart';
 
 class CustomerEditScreen extends StatefulWidget {
   final Customer? customer;
@@ -45,7 +47,9 @@ class _CustomerEditScreenState extends State<CustomerEditScreen> {
           widget.customer!.location.latitude.toString();
       _longitudeNameController.text =
           widget.customer!.location.longitude.toString();
-      _productName = widget.customer!.buyingProduct!;
+      if (productNames.contains(widget.customer!.buyingProduct!)) {
+        _productName = widget.customer!.buyingProduct!;
+      }
     }
     super.initState();
   }
@@ -154,44 +158,6 @@ class _CustomerEditScreenState extends State<CustomerEditScreen> {
                             margin: const EdgeInsets.symmetric(vertical: 5),
                             height: 60,
                             child: TextFormField(
-                              //enabled: widget.setItem != null ? false : true,
-                              controller: _latitudeNameController,
-                              keyboardType: TextInputType.number,
-                              decoration:
-                                  const InputDecoration(labelText: 'Latitude'),
-                              style: secondaryTextStyle(),
-                              textInputAction: TextInputAction.next,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter latitude';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            height: 60,
-                            child: TextFormField(
-                              //enabled: widget.setItem != null ? false : true,
-                              controller: _longitudeNameController,
-                              keyboardType: TextInputType.number,
-                              decoration:
-                                  const InputDecoration(labelText: 'Longitude'),
-                              style: secondaryTextStyle(),
-                              textInputAction: TextInputAction.next,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter longitude';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            height: 60,
-                            child: TextFormField(
                               controller: _phNoController,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
@@ -232,6 +198,88 @@ class _CustomerEditScreenState extends State<CustomerEditScreen> {
                                 _productName = newValue.toString();
                               },
                               value: _productName,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: boxDecorationWithRoundedCorners(
+                              backgroundColor: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  height: 60,
+                                  child: TextFormField(
+                                    //enabled: widget.setItem != null ? false : true,
+                                    controller: _latitudeNameController,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                        labelText: 'Latitude'),
+                                    style: secondaryTextStyle(),
+                                    textInputAction: TextInputAction.next,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please enter latitude';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  height: 60,
+                                  child: TextFormField(
+                                    //enabled: widget.setItem != null ? false : true,
+                                    controller: _longitudeNameController,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                        labelText: 'Longitude'),
+                                    style: secondaryTextStyle(),
+                                    textInputAction: TextInputAction.next,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please enter longitude';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors
+                                          .blueGrey, // Set the desired background color
+                                    ),
+                                    onPressed: () async {
+                                      Position? curPosition =
+                                          await LocationService
+                                              .getCurrentLocation();
+                                      if (curPosition != null) {
+                                        _latitudeNameController.text =
+                                            curPosition.latitude
+                                                .toStringAsFixed(4);
+                                        _longitudeNameController.text =
+                                            curPosition.longitude
+                                                .toStringAsFixed(4);
+                                      }
+                                    },
+                                    child: _isLoading
+                                        ? const SizedBox(
+                                            height: 20,
+                                            width: 20,
+                                            child: CircularProgressIndicator(
+                                                color: Colors.white),
+                                          )
+                                        : const Text('Get Location',
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white))),
+                                SizedBox(height: 10),
+                              ],
                             ),
                           ),
                           const SizedBox(height: 30),

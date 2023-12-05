@@ -13,24 +13,25 @@ class OrderViewModel with ChangeNotifier {
   TransactionRepository transactionRepository =
       getItInstance<TransactionRepository>();
 
-  List<Order> orderList = [];
+  //List<Order> orderList = [];
   List<SaleTransaction> saleTranList = [];
   AppError appError = AppError(AppErrorType.initial);
   OrderViewModel() {
-    getOrders();
+    //getOrders();
     getSaleTransactions();
   }
 
-  Future<void> getOrders() async {
-    appError = AppError(AppErrorType.loading);
-    Either response = await orderRepository.getOrderList();
-    response.fold((l) => appError = l, (r) {
-      appError = AppError(AppErrorType.initial);
-      return orderList = r;
-    });
-    orderList.sort((a, b) => a.orderTime.compareTo(b.orderTime));
-    notifyListeners();
-  }
+  // Future<void> getOrders() async {
+  //   appError = AppError(AppErrorType.loading);
+  //   Either response = await orderRepository.getOrderList();
+  //   response.fold((l) => appError = l, (r) {
+  //     appError = AppError(AppErrorType.initial);
+  //     return orderList = r;
+  //   });
+  //
+  //   orderList.sort((a, b) => a.orderTime.compareTo(b.orderTime));
+  //   notifyListeners();
+  // }
 
   Future<void> getSaleTransactions() async {
     appError = AppError(AppErrorType.loading);
@@ -43,22 +44,21 @@ class OrderViewModel with ChangeNotifier {
     response.fold((l) => appError = l, (r) {
       saleTranList.addAll(r);
     });
-
     notifyListeners();
   }
 
   Future<void> deleteOrder(Order order) async {
     await orderRepository.deleteOrder(order: order);
-    orderList.remove(order);
-    notifyListeners();
+    //orderList.remove(order);
+    //notifyListeners();
   }
 
   List<Map<String, dynamic>> customerSuggestList() {
     List<Map<String, dynamic>> shopsToCallList = [];
     List<String> shopNames = [];
-    List<SaleTransaction> _tranList = saleTranList;
+    List<SaleTransaction> tranList = saleTranList;
 
-    for (var tran in _tranList) {
+    for (var tran in tranList) {
       if (!shopNames.contains(tran.customerName)) {
         shopNames.add(tran.customerName);
       }
@@ -68,7 +68,7 @@ class OrderViewModel with ChangeNotifier {
       List<int> numList = [];
       int orderHabit = 0;
       List<SaleTransaction> tranListForShop =
-          _tranList.where((tran) => tran.customerName == shop).toList();
+          tranList.where((tran) => tran.customerName == shop).toList();
       tranListForShop.sort((b, a) => a.tranDate.compareTo(b.tranDate));
 
       for (var shop in tranListForShop) {
@@ -120,9 +120,9 @@ class OrderViewModel with ChangeNotifier {
             'order habit': orderHabit,
             'day difference': DateTime.now()
                     .difference(DateTime(
-                        tranListForShop.first.tranDate!.year,
-                        tranListForShop.first.tranDate!.month,
-                        tranListForShop.first.tranDate!.day))
+                        tranListForShop.first.tranDate.year,
+                        tranListForShop.first.tranDate.month,
+                        tranListForShop.first.tranDate.day))
                     .inDays -
                 orderHabit,
           };

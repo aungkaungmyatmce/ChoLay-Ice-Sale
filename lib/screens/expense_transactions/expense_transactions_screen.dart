@@ -12,7 +12,7 @@ class ExpenseTransactionsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProxyProvider<TransactionsViewModel,
         ExpenseTransactionsViewModel>(
-      create: (contex) => ExpenseTransactionsViewModel(),
+      create: (context) => ExpenseTransactionsViewModel(),
       update: (_, transactionsViewModel, expenseTransactionsViewModel) =>
           expenseTransactionsViewModel!
             ..updateMonth(transactionsViewModel.selectedMonth),

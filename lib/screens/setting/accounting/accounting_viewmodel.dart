@@ -19,7 +19,7 @@ class AccountingViewModel with ChangeNotifier {
 
   List<SaleTransaction> saleTransactionList = [];
   List<ExpenseTransaction> expenseTransactionList = [];
-  List<Product> productList = [];
+  List<String> productList = [];
   AppError appError = AppError(AppErrorType.initial);
 
   bool isLoading = false;
@@ -35,29 +35,34 @@ class AccountingViewModel with ChangeNotifier {
   Future<void> getData() async {
     saleTransactionList = [];
     expenseTransactionList = [];
+    productList = [];
+
     appError = AppError(AppErrorType.loading);
     notifyListeners();
+
     Either saleResponse = await transactionRepository.getSaleTransactions(
         tranMonth: selectedMonth!);
     saleResponse.fold((l) => appError = l, (r) {
-      appError = AppError(AppErrorType.initial);
-
       return saleTransactionList = r;
     });
 
     Either expenseResponse = await transactionRepository.getExpenseTransactions(
         tranMonth: selectedMonth!);
-
     expenseResponse.fold((l) => appError = l, (r) {
-      appError = AppError(AppErrorType.initial);
       return expenseTransactionList = r;
     });
-
-    Either productResponse = await productRepository.getProductList();
-    productResponse.fold((l) => appError = l, (r) {
+    if (saleTransactionList.isEmpty && expenseTransactionList.isEmpty) {
+      appError = AppError(AppErrorType.database);
+    } else {
       appError = AppError(AppErrorType.initial);
-      return productList = r;
+    }
+
+    saleTransactionList.forEach((tran) {
+      if (!productList.contains(tran.productName)) {
+        productList.add(tran.productName);
+      }
     });
+
     notifyListeners();
   }
 
@@ -69,19 +74,23 @@ class AccountingViewModel with ChangeNotifier {
 
   List<Map<String, dynamic>> saleTransactionsForOneMonth() {
     List<Map<String, dynamic>> mapList = [];
+
     productList.forEach((product) {
       int total = 0;
+      int price = 0;
       saleTransactionList.forEach((tran) {
-        if (tran.productName == product.name) {
+        if (tran.productName == product) {
           total += tran.quantity;
+          price = tran.price;
         }
       });
       mapList.add({
-        'productName': product.name,
+        'productName': product,
         'amount': total.toString(),
-        'price': (total * product.price).toString(),
+        'price': (total * price).toString(),
       });
     });
+
     return mapList;
   }
 

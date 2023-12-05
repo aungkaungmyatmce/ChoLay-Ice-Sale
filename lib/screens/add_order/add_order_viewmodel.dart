@@ -3,6 +3,7 @@ import 'package:cholay_ice_sale/core/models/transactions/product_transaction.dar
 import 'package:dartz/dartz.dart' hide Order;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../common/themes/app_color.dart';
 import '../../core/models/app_error.dart';
@@ -75,10 +76,13 @@ class AddOrderViewModel with ChangeNotifier {
   void selectCustomer(String name) {
     customerNameController.text = name;
     Customer customer = customerList.firstWhere((cus) => cus.name == name);
-    Product product =
-        productList.firstWhere((pro) => pro.name == customer.buyingProduct);
-    productNameController.first.text = product.name ?? '';
-    priceController.first.text = product.price.toString() ?? '';
+    Product? product = productList
+        .firstWhereOrNull((pro) => pro.name == customer.buyingProduct);
+    if (product != null) {
+      productNameController.first.text = product.name ?? '';
+      priceController.first.text = product.price.toString() ?? '';
+    }
+
     notifyListeners();
   }
 

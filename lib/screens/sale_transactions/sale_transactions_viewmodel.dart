@@ -50,12 +50,6 @@ class SaleTransactionsViewModel with ChangeNotifier {
     //     (l) => AppError(l.appErrorType), (r) => expenseTransactionList = r);
   }
 
-  void changeMonth(DateTime month) async {
-    selectedMonth = month;
-    await getData();
-    notifyListeners();
-  }
-
   List<Map<String, dynamic>> saleTransactionsForOneMonth() {
     List<SaleTransaction> dayTranList = saleTransactionList
         .where((tran) =>

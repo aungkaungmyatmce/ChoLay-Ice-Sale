@@ -30,10 +30,21 @@ class CustomerRemoteDataSourceImpl extends CustomerRemoteDataSource {
   @override
   Future<void> updateCustomerList(
       {required List<Customer> customerList}) async {
-    final response = await customerCollection.doc('customerList').update({
-      'customerList':
-          customerList.map((customer) => customer.toJson()).toList(),
-    });
+    var response;
+    DocumentSnapshot docSnapshot =
+        await customerCollection.doc('customerList').get();
+    if (docSnapshot.exists) {
+      final response = await customerCollection.doc('customerList').update({
+        'customerList':
+            customerList.map((customer) => customer.toJson()).toList(),
+      });
+    } else {
+      final response = await customerCollection.doc('customerList').set({
+        'customerList':
+            customerList.map((customer) => customer.toJson()).toList(),
+      });
+    }
+
     return response;
   }
 }

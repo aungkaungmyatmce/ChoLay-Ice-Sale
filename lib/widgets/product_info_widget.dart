@@ -33,6 +33,7 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
     final salePrintViewModel = Provider.of<SalePrintViewModel>(context);
 
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 5),
       decoration: boxDecorationWithRoundedCorners(
         backgroundColor: Colors.grey.shade100,
         borderRadius: BorderRadius.circular(12),
@@ -43,23 +44,27 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 5),
             child: SizedBox(
-              width: 160,
-              height: 65,
+              width: 150,
+              //height: 65,
               child: DropdownButtonFormField(
+                padding: EdgeInsets.symmetric(vertical: 10),
                 isExpanded: true,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
-                hint: Text(TranslationConstants.product.t(context)),
+                hint: Text(
+                  TranslationConstants.product.t(context),
+                  style: TextStyle(height: 1),
+                ),
                 items: salePrintViewModel.productList.map((Product product) {
                   return DropdownMenuItem(
                     value: product.name,
                     child: Text(
                       product.name,
                       overflow: TextOverflow.ellipsis,
-                      style: secondaryTextStyle(),
+                      style: secondaryTextStyle(height: 1),
                     ),
                   );
                 }).toList(),
@@ -77,9 +82,8 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
               ),
             ),
           ),
-          SizedBox(
-            height: 50,
-            width: 60,
+          SizedBox(width: 5),
+          Expanded(
             child: TextField(
               focusNode: _amountFocusNode,
               controller: widget.amountController,
@@ -104,9 +108,7 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
               },
             ),
           ),
-          SizedBox(
-            height: 50,
-            width: 70,
+          Expanded(
             child: TextField(
                 controller: widget.priceController,
                 keyboardType: TextInputType.number,
@@ -130,15 +132,13 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
                   }
                 }),
           ),
-          SizedBox(
-            height: 50,
-            width: 70,
+          Expanded(
             child: TextField(
               controller: widget.totalController,
               keyboardType: TextInputType.number,
               style: secondaryTextStyle(),
-              decoration: const InputDecoration(
-                hintText: 'စုစုပေါင်း',
+              decoration: InputDecoration(
+                hintText: TranslationConstants.total.t(context),
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,

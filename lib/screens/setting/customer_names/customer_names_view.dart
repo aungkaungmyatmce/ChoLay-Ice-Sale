@@ -1,5 +1,6 @@
 import 'package:cholay_ice_sale/common/extensions/string_extensions.dart';
 import 'package:cholay_ice_sale/common/themes/app_color.dart';
+import 'package:cholay_ice_sale/core/models/app_error.dart';
 import 'package:cholay_ice_sale/core/models/customer.dart';
 import 'package:cholay_ice_sale/screens/setting/customer_names/customer_edit_widget.dart';
 import 'package:cholay_ice_sale/screens/setting/customer_names/customer_names_viewmodel.dart';
@@ -31,12 +32,72 @@ class CustomerNamesView extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CustomerEditScreen(
-                            customerNamesViewModel: customerNamesViewModel),
-                      ));
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: Text('Are you sure?', style: secondaryTextStyle()),
+                      content: Text(
+                          'ဆိုင်နာမည်တွေကို phone contact ထဲထည့်မှာလား',
+                          style: secondaryTextStyle()),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('No', style: secondaryTextStyle()),
+                          onPressed: () {
+                            Navigator.of(context).pop(false);
+                          },
+                        ),
+                        TextButton(
+                          child: Text('Yes', style: secondaryTextStyle()),
+                          onPressed: () {
+                            customerNamesViewModel.addContacts();
+                            Navigator.of(context).pop(true);
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.contacts, color: Colors.orange)),
+            IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: Text('Are you sure?', style: secondaryTextStyle()),
+                      content: Text(
+                          'ဆိုင်နာမည်တွေကို phone contact ထဲကနေပြန်ဖျက်မှာလား',
+                          style: secondaryTextStyle()),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('No', style: secondaryTextStyle()),
+                          onPressed: () {
+                            Navigator.of(context).pop(false);
+                          },
+                        ),
+                        TextButton(
+                          child: Text('Yes', style: secondaryTextStyle()),
+                          onPressed: () {
+                            customerNamesViewModel.deleteContacts();
+                            Navigator.of(context).pop(true);
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                icon:
+                    const Icon(Icons.delete_sweep_outlined, color: Colors.red)),
+            IconButton(
+                onPressed: () {
+                  if (customerNamesViewModel.appError.appErrorType !=
+                      AppErrorType.loading) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CustomerEditScreen(
+                              customerNamesViewModel: customerNamesViewModel),
+                        ));
+                  }
                 },
                 icon: const Icon(Icons.add, color: Colors.white)),
             const SizedBox(width: 10),
@@ -74,39 +135,36 @@ class CustomerNamesView extends StatelessWidget {
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 3),
                                 leading: SizedBox(
-                                  width: 120,
+                                  width: 130,
                                   child: Text(
                                       '${index + 1}. ${customerList[index].name}',
                                       // overflow: TextOverflow.visible,
                                       style: boldTextStyle(
-                                          color: AppColor.primaryColor,
-                                          size: 14,
-                                          height: 1.5)),
+                                        color: AppColor.primaryColor,
+                                        size: 14,
+                                      )),
                                 ),
                                 title: Text(
                                   '${customerList[index].buyingProduct}',
                                   style: secondaryTextStyle(size: 13),
                                 ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Text(
-                                    //   'Amount  : ',
-                                    //   style: secondaryTextStyle(size: 13),
-                                    // ),
-                                    // const SizedBox(height: 5),
-                                    SizedBox(
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            customerList[index].phNo,
-                                            style: secondaryTextStyle(size: 13),
-                                          ),
-                                        ],
-                                      ),
+                                subtitle: InkWell(
+                                  onTap: () => customerNamesViewModel
+                                      .makePhoneCall(customerList[index].phNo),
+                                  child: SizedBox(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.phone_android,
+                                          color: Colors.green,
+                                        ),
+                                        Text(
+                                          customerList[index].phNo,
+                                          style: secondaryTextStyle(size: 13),
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(height: 5),
-                                  ],
+                                  ),
                                 ),
                                 trailing: SizedBox(
                                   width: 55,

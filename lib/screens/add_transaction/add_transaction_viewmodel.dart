@@ -3,6 +3,7 @@ import 'package:cholay_ice_sale/core/models/transactions/sale_transaction.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../common/themes/app_color.dart';
 import '../../core/models/app_error.dart';
@@ -87,10 +88,12 @@ class AddTransactionViewModel with ChangeNotifier {
         customerMapList.map((cus) => cus['name'] as Customer).toList();
 
     transactionList.forEach((tran) {
-      Customer cus =
-          sortedCustomerList.firstWhere((cus) => cus.name == tran.customerName);
-      sortedCustomerList.remove(cus);
-      sortedCustomerList.add(cus);
+      Customer? cus = sortedCustomerList
+          .firstWhereOrNull((cus) => cus.name == tran.customerName);
+      if (cus != null) {
+        sortedCustomerList.remove(cus);
+        sortedCustomerList.add(cus);
+      }
     });
   }
 

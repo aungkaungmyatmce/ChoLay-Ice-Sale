@@ -12,6 +12,7 @@ class TransportTarget {
   });
 
   factory TransportTarget.fromJson(dynamic jsonData) {
+
     return TransportTarget(
         startingTime:
             DateTime.parse(jsonData['startingTime'].toDate().toString()),

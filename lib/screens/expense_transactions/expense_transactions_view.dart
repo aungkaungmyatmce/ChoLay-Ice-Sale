@@ -67,13 +67,8 @@ class ExpenseTransactionsView extends StatelessWidget {
                                   return confirmDeleteTran(context);
                                 },
                                 onDismissed: (direction) async {
-                                  // await Provider.of<TransactionProvider>(context,
-                                  //         listen: false)
-                                  //     .deleteTransaction(
-                                  //         allTranList[index]['tranList'][index2],
-                                  //         widget.date);
-                                  // UIHelper.showSuccessFlushBar(
-                                  //     context, 'Transaction deleted!');
+                                  await expTranViewModel.deleteExpenseTran(
+                                      dailyTranList[index]['tranList'][index2]);
                                 },
                                 direction: DismissDirection.endToStart,
                                 background: Container(

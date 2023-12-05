@@ -28,8 +28,16 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
 
   @override
   Future<void> updateProductList({required List<Product> productList}) async {
-    await productCollection.doc('productList').update({
-      'productList': productList.map((product) => product.toJson()).toList(),
-    });
+    DocumentSnapshot docSnapshot =
+        await productCollection.doc('productList').get();
+    if (!docSnapshot.exists) {
+      await productCollection.doc('productList').update({
+        'productList': productList.map((product) => product.toJson()).toList(),
+      });
+    } else {
+      await productCollection.doc('productList').update({
+        'productList': productList.map((product) => product.toJson()).toList(),
+      });
+    }
   }
 }

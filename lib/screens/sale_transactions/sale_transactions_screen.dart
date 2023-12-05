@@ -11,7 +11,7 @@ class SaleTransactionsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProxyProvider<TransactionsViewModel,
         SaleTransactionsViewModel>(
-      create: (contex) => SaleTransactionsViewModel(),
+      create: (context) => SaleTransactionsViewModel(),
       update: (_, transactionsViewModel, saleTransactionsViewModel) =>
           saleTransactionsViewModel!
             ..updateMonth(transactionsViewModel.selectedMonth),

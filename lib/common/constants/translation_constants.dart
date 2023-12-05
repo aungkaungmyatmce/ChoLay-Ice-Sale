@@ -15,12 +15,16 @@ class TranslationConstants {
   static const String transactions = "transactions";
   static const String sales = "sales";
   static const String expense = "expense";
+  static const String total = "total";
 
   static const String targets = "targets";
   static const String routes = "routes";
+  static const String dashBoard = "dashBoard";
+  static const String saleAnalytics = "saleAnalytics";
   static const String targetTransport = "targetTransport";
   static const String level = "level";
   static const String current = "current";
+  static const String sold = "sold";
   static const String totalShopsSold = "totalShopsSold";
   static const String deliStartingTime = "deliStartingTime";
   static const String award = "award";

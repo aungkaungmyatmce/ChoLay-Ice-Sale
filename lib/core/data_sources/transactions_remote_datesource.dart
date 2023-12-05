@@ -100,7 +100,7 @@ class TransactionRemoteDataSourceImpl extends TransactionRemoteDataSource {
       required ExpenseTransaction expenseTran}) async {
     final response = await transactionCollection
         .doc(DateFormat.yMMM().format(tranMonth).toString())
-        .collection('saleTransactions')
+        .collection('expenseTransactions')
         .doc(expenseTran.tranId)
         .delete();
     return response;

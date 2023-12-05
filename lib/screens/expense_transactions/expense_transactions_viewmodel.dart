@@ -65,4 +65,11 @@ class ExpenseTransactionsViewModel with ChangeNotifier {
     }
     return dailyTranList;
   }
+
+  Future<void> deleteExpenseTran(ExpenseTransaction tran) async {
+    await transactionRepository.deleteExpenseTransaction(
+        tranMonth: selectedMonth!, expenseTran: tran);
+    expenseTransactionList.remove(tran);
+    notifyListeners();
+  }
 }

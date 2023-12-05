@@ -1,31 +1,29 @@
-import 'package:cholay_ice_sale/common/constants/translation_constants.dart';
 import 'package:cholay_ice_sale/common/extensions/string_extensions.dart';
-import 'package:cholay_ice_sale/common/themes/app_color.dart';
-import 'package:cholay_ice_sale/screens/target/target_viewmodel.dart';
-import 'package:cholay_ice_sale/screens/target/widgets/chart_screen.dart';
-import 'package:cholay_ice_sale/widgets/body_widget.dart';
+import 'package:cholay_ice_sale/screens/sale_analytics/sale_analytics_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../common/constants/decoration.dart';
-import '../../../common/constants/route_constants.dart';
-import '../../../common/constants/style.dart';
+import '../../common/constants/route_constants.dart';
+import '../../common/constants/style.dart';
+import '../../common/constants/translation_constants.dart';
+import '../../common/themes/app_color.dart';
+import '../../widgets/body_widget.dart';
 
-class RoutesWidget extends StatelessWidget {
-  const RoutesWidget({Key? key}) : super(key: key);
+class SaleAnalyticView extends StatelessWidget {
+  const SaleAnalyticView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final targetViewModel = Provider.of<TargetViewModel>(context);
+    final saleAnalyticsViewModel = Provider.of<SaleAnalyticsViewModel>(context);
     List<Map<String, dynamic>> allRouteList =
-        targetViewModel.routeList(isAllList: true);
+        saleAnalyticsViewModel.routeList(isAllList: true);
     List<Map<String, dynamic>> orderRouteList =
-        targetViewModel.routeList(isAllList: false);
+        saleAnalyticsViewModel.routeList(isAllList: false);
 
+    print(saleAnalyticsViewModel.appError);
     return BodyWidget(
-      appError: targetViewModel.appError,
+      appError: saleAnalyticsViewModel.appError,
       child: DefaultTabController(
         length: 2,
         child: Column(
@@ -68,10 +66,8 @@ class RoutesWidget extends StatelessWidget {
                   ),
                   IconButton(
                       onPressed: () {
-                        print('GOGO');
-                        print(targetViewModel);
                         Navigator.of(context).pushNamed(RouteList.chartScreen,
-                            arguments: targetViewModel);
+                            arguments: saleAnalyticsViewModel);
                       },
                       icon: Icon(
                         Icons.add_chart,

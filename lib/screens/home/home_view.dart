@@ -76,7 +76,7 @@ class HomeView extends StatelessWidget {
                   tabItem(
                       1, TranslationConstants.sales.t(context), 'stock', 22.0),
                   Container(width: 45, height: 45),
-                  tabItem(2, TranslationConstants.targets.t(context),
+                  tabItem(2, TranslationConstants.dashBoard.t(context),
                       'tran_history', 20.0),
                   tabItem(3, TranslationConstants.setting.t(context), 'setting',
                       20.0),

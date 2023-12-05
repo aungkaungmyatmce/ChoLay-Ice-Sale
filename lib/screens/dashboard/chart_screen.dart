@@ -2,11 +2,12 @@ import 'package:cholay_ice_sale/common/constants/style.dart';
 import 'package:cholay_ice_sale/core/models/product.dart';
 import 'package:cholay_ice_sale/core/repositories/product_repository.dart';
 import 'package:cholay_ice_sale/core/services/draw_line_graph.dart';
+import 'package:cholay_ice_sale/screens/sale_analytics/sale_analytics_viewmodel.dart';
 import 'package:dartz/dartz.dart' show Either;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../di/get_it.dart';
-import '../target_viewmodel.dart';
+import '../../di/get_it.dart';
+import '../target/target_viewmodel.dart';
 
 class ChartScreen extends StatefulWidget {
   ChartScreen({Key? key}) : super(key: key);
@@ -39,10 +40,10 @@ class _ChartScreenState extends State<ChartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var targetViewModel =
-        ModalRoute.of(context)?.settings.arguments as TargetViewModel;
+    var saleAnalyticsViewModel =
+        ModalRoute.of(context)?.settings.arguments as SaleAnalyticsViewModel;
     List<Map<String, dynamic>> allRouteList =
-        targetViewModel.routeList(isAllList: true);
+        saleAnalyticsViewModel.routeList(isAllList: true);
     List<int> xData = allRouteList
         .map((route) => int.parse(DateFormat('dd').format(route['date'])))
         .toList()
@@ -62,7 +63,8 @@ class _ChartScreenState extends State<ChartScreen> {
               child: Row(
                 children: [
                   Text(
-                    DateFormat.yMMM().format(targetViewModel.selectedMonth),
+                    DateFormat.yMMM()
+                        .format(saleAnalyticsViewModel.selectedMonth),
                     style: secondaryTextStyle(color: Colors.white),
                   ),
                   const SizedBox(width: 5),

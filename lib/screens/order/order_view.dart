@@ -15,7 +15,6 @@ class OrderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final orderViewModel = Provider.of<OrderViewModel>(context);
     return SafeArea(
         child: DefaultTabController(
             length: 2,
@@ -38,12 +37,9 @@ class OrderView extends StatelessWidget {
                 actions: [
                   IconButton(
                       onPressed: () async {
-                        var isAdded = await Navigator.of(context).pushNamed(
+                        await Navigator.of(context).pushNamed(
                           RouteList.addOrderScreen,
                         );
-                        if (isAdded == true) {
-                          orderViewModel.getOrders();
-                        }
                       },
                       icon: Icon(Icons.add_circle_outline)),
                   SizedBox(width: 15),
