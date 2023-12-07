@@ -62,8 +62,7 @@ class _TransportTargetEditWidgetState extends State<TransportTargetEditWidget> {
             widget.transportTargetList[index].days.toString();
       }
 
-      if (widget.transportTargetList[index].pricePool != 0 &&
-          widget.transportTargetList[index].pricePool != null) {
+      if (widget.transportTargetList[index].pricePool != null) {
         awardController[index].text =
             widget.transportTargetList[index].pricePool.toString();
       }
@@ -89,9 +88,7 @@ class _TransportTargetEditWidgetState extends State<TransportTargetEditWidget> {
             targetLevel: index + 1,
             days: int.parse(daysController[index].text),
             startingTime: timeController[index],
-            pricePool: awardController[index].text.isNotEmpty
-                ? int.parse(awardController[index].text)
-                : 0,
+            pricePool: awardController[index].text,
           ),
         );
       }
@@ -106,7 +103,7 @@ class _TransportTargetEditWidgetState extends State<TransportTargetEditWidget> {
     setState(() {
       isLoading = false;
     });
-    Navigator.pop(context);
+    Navigator.of(context).pop(true);
   }
 
   @override
@@ -173,7 +170,6 @@ class _TransportTargetEditWidgetState extends State<TransportTargetEditWidget> {
                           width: 80,
                           child: TextField(
                             controller: awardController[0],
-                            keyboardType: TextInputType.number,
                             style: secondaryTextStyle(),
                             decoration: const InputDecoration(
                               hintText: 'Reward',
@@ -183,10 +179,6 @@ class _TransportTargetEditWidgetState extends State<TransportTargetEditWidget> {
                             ),
                             onChanged: (value) {},
                           ),
-                        ),
-                        Text(
-                          'ks',
-                          style: primaryTextStyle(color: Colors.grey),
                         ),
                       ],
                     ),
@@ -232,7 +224,6 @@ class _TransportTargetEditWidgetState extends State<TransportTargetEditWidget> {
                           width: 80,
                           child: TextField(
                             controller: awardController[1],
-                            keyboardType: TextInputType.number,
                             style: secondaryTextStyle(),
                             decoration: const InputDecoration(
                               hintText: 'Reward',
@@ -242,10 +233,6 @@ class _TransportTargetEditWidgetState extends State<TransportTargetEditWidget> {
                             ),
                             onChanged: (value) {},
                           ),
-                        ),
-                        Text(
-                          'ks',
-                          style: primaryTextStyle(color: Colors.grey),
                         ),
                       ],
                     ),
@@ -291,7 +278,6 @@ class _TransportTargetEditWidgetState extends State<TransportTargetEditWidget> {
                           width: 80,
                           child: TextField(
                             controller: awardController[2],
-                            keyboardType: TextInputType.number,
                             style: secondaryTextStyle(),
                             decoration: const InputDecoration(
                               hintText: 'Reward',
@@ -301,10 +287,6 @@ class _TransportTargetEditWidgetState extends State<TransportTargetEditWidget> {
                             ),
                             onChanged: (value) {},
                           ),
-                        ),
-                        Text(
-                          'ks',
-                          style: primaryTextStyle(color: Colors.grey),
                         ),
                       ],
                     ),

@@ -33,6 +33,8 @@ class SalePrintViewModel with ChangeNotifier {
         totalController[index].text =
             (product.price! * product.quantity).toString();
       }
+    } else {
+      getCurrentPosition();
     }
   }
 
@@ -59,6 +61,7 @@ class SalePrintViewModel with ChangeNotifier {
 
   Future<void> getCurrentPosition() async {
     curPosition = await LocationService.getCurrentLocation();
+    autoSelectCustomer();
   }
 
   Future<void> getData() async {
@@ -67,8 +70,7 @@ class SalePrintViewModel with ChangeNotifier {
 
     Either proResponse = await productRepository.getProductList();
     proResponse.fold((l) => AppError(l), (r) => productList = r);
-    await getCurrentPosition();
-    autoSelectCustomer();
+
     notifyListeners();
   }
 

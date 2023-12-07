@@ -81,13 +81,13 @@ class AccountingViewModel with ChangeNotifier {
       saleTransactionList.forEach((tran) {
         if (tran.productName == product) {
           total += tran.quantity;
-          price = tran.price;
+          price += tran.totalPrice;
         }
       });
       mapList.add({
         'productName': product,
         'amount': total.toString(),
-        'price': (total * price).toString(),
+        'price': price.toString(),
       });
     });
 

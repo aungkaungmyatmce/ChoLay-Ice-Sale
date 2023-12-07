@@ -23,7 +23,7 @@ class HomeView extends StatelessWidget {
           homeViewModel.changePos(pos);
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
+          padding: const EdgeInsets.symmetric(vertical: 5),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

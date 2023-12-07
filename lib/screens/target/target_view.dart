@@ -122,15 +122,10 @@ class TargetView extends StatelessWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         if (targetViewModel
-                                                    .saleTargetList[index]
-                                                    .targets[index2]
-                                                    .pricePool !=
-                                                null &&
-                                            targetViewModel
-                                                    .saleTargetList[index]
-                                                    .targets[index2]
-                                                    .pricePool !=
-                                                0)
+                                                .saleTargetList[index]
+                                                .targets[index2]
+                                                .pricePool !=
+                                            null)
                                           Text(
                                               TranslationConstants.award
                                                   .t(context),
@@ -149,31 +144,34 @@ class TargetView extends StatelessWidget {
                                                       ? Colors.green
                                                       : null)),
                                         if (targetViewModel
+                                                .saleTargetList[index]
+                                                .targets[index2]
+                                                .pricePool !=
+                                            null)
+                                          Expanded(
+                                            child: Text(
+                                                targetViewModel
                                                     .saleTargetList[index]
                                                     .targets[index2]
-                                                    .pricePool !=
-                                                null &&
-                                            targetViewModel
-                                                    .saleTargetList[index]
-                                                    .targets[index2]
-                                                    .pricePool !=
-                                                0)
-                                          Text(
-                                              '${targetViewModel.saleTargetList[index].targets[index2].pricePool.toString()} ks',
-                                              style: secondaryTextStyle(
-                                                  color: targetViewModel
-                                                                  .productsSoldAmount()[
-                                                              targetViewModel
-                                                                  .saleTargetList[
-                                                                      index]
-                                                                  .productName]! >
-                                                          targetViewModel
-                                                              .saleTargetList[
-                                                                  index]
-                                                              .targets[index2]
-                                                              .amount
-                                                      ? Colors.green
-                                                      : null)),
+                                                    .pricePool
+                                                    .toString(),
+                                                style: secondaryTextStyle(
+                                                    color: targetViewModel
+                                                                    .productsSoldAmount()[
+                                                                targetViewModel
+                                                                    .saleTargetList[
+                                                                        index]
+                                                                    .productName]! >
+                                                            targetViewModel
+                                                                .saleTargetList[
+                                                                    index]
+                                                                .targets[index2]
+                                                                .amount
+                                                        ? Colors.green
+                                                        : null),
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                          ),
                                       ],
                                     ),
                                   ),
@@ -197,7 +195,7 @@ class TargetView extends StatelessWidget {
                             );
                           },
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Row(
                           children: [
                             Expanded(
@@ -229,7 +227,7 @@ class TargetView extends StatelessWidget {
                             Flexible(flex: 7, child: Container())
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         CustomProgressIndicator(
                           currentLevel: currentLevel!,
                           targetLevels: targetViewModel
@@ -277,66 +275,69 @@ class TargetView extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Text(
-                                    '${TranslationConstants.level.t(context)}  ${targetViewModel.transportTargetList[index].targetLevel.toString()}    ',
-                                    style: secondaryTextStyle(
-                                        color: targetViewModel
-                                                    .transportTargetReach()[
-                                                index]['isReached']
-                                            ? Colors.green
-                                            : AppColor.secondaryColor)),
-                                Text(
-                                    '${DateFormat('hh:mm').format(targetViewModel.transportTargetList[index].startingTime)}AM  '
-                                    '${targetViewModel.transportTargetList[index].days.toString()} ${TranslationConstants.days.t(context)}',
-                                    style: secondaryTextStyle(
-                                        color: targetViewModel
-                                                    .transportTargetReach()[
-                                                index]['isReached']
-                                            ? Colors.green
-                                            : AppColor.secondaryColor)),
-                                const Spacer(),
-                                if (targetViewModel.transportTargetList[index]
-                                            .pricePool !=
-                                        null &&
-                                    targetViewModel.transportTargetList[index]
-                                            .pricePool !=
-                                        0)
-                                  Text('Award   ',
-                                      style: secondaryTextStyle(
-                                          color: targetViewModel
-                                                      .transportTargetReach()[
-                                                  index]['isReached']
-                                              ? Colors.green
-                                              : AppColor.secondaryColor)),
-                                if (targetViewModel.transportTargetList[index]
-                                            .pricePool !=
-                                        null &&
-                                    targetViewModel.transportTargetList[index]
-                                            .pricePool !=
-                                        0)
-                                  Text(
-                                      '${targetViewModel.transportTargetList[index].pricePool.toString()} ks',
-                                      style: secondaryTextStyle(
-                                          color: targetViewModel
-                                                      .transportTargetReach()[
-                                                  index]['isReached']
-                                              ? Colors.green
-                                              : AppColor.secondaryColor)),
-                                // if (targetViewModel.productsSoldAmount()[
-                                //         targetViewModel
-                                //             .saleTargetList[index].productName]! >
-                                //     targetViewModel.saleTargetList[index]
-                                //         .targets[index2].amount)
-                                //   const Padding(
-                                //     padding: EdgeInsets.only(left: 15),
-                                //     child: Icon(
-                                //       size: 25,
-                                //       Icons.check_circle_outline,
-                                //       color: Colors.green,
-                                //     ),
-                                //   )
-                                // else
-                                //   const SizedBox(width: 40)
+                                Expanded(
+                                  flex: 6,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                          '${TranslationConstants.level.t(context)}  ${targetViewModel.transportTargetList[index].targetLevel.toString()}    ',
+                                          style: secondaryTextStyle(
+                                              color: targetViewModel
+                                                          .transportTargetReach()[
+                                                      index]['isReached']
+                                                  ? Colors.green
+                                                  : AppColor.secondaryColor)),
+                                      Text(
+                                          '${DateFormat('hh:mm').format(targetViewModel.transportTargetList[index].startingTime)}AM  '
+                                          '${targetViewModel.transportTargetList[index].days.toString()} ${TranslationConstants.days.t(context)}',
+                                          style: secondaryTextStyle(
+                                              color: targetViewModel
+                                                          .transportTargetReach()[
+                                                      index]['isReached']
+                                                  ? Colors.green
+                                                  : AppColor.secondaryColor)),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 5,
+                                  child: Row(
+                                    children: [
+                                      if (targetViewModel
+                                              .transportTargetList[index]
+                                              .pricePool !=
+                                          null)
+                                        Text(
+                                            TranslationConstants.award
+                                                .t(context),
+                                            style: secondaryTextStyle(
+                                                color: targetViewModel
+                                                            .transportTargetReach()[
+                                                        index]['isReached']
+                                                    ? Colors.green
+                                                    : AppColor.secondaryColor)),
+                                      if (targetViewModel
+                                              .transportTargetList[index]
+                                              .pricePool !=
+                                          null)
+                                        Expanded(
+                                          child: Text(
+                                            targetViewModel
+                                                .transportTargetList[index]
+                                                .pricePool
+                                                .toString(),
+                                            style: secondaryTextStyle(
+                                                color: targetViewModel
+                                                            .transportTargetReach()[
+                                                        index]['isReached']
+                                                    ? Colors.green
+                                                    : AppColor.secondaryColor),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                             CustomProgressIndicator(

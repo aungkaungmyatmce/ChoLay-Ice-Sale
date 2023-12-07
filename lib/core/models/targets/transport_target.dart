@@ -2,7 +2,7 @@ class TransportTarget {
   final DateTime startingTime;
   final int days;
   final int targetLevel;
-  final int? pricePool;
+  final String? pricePool;
 
   TransportTarget({
     required this.startingTime,
@@ -12,7 +12,6 @@ class TransportTarget {
   });
 
   factory TransportTarget.fromJson(dynamic jsonData) {
-
     return TransportTarget(
         startingTime:
             DateTime.parse(jsonData['startingTime'].toDate().toString()),

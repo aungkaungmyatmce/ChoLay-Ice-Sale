@@ -47,9 +47,7 @@ class _SaleTargetEditWidgetState extends State<SaleTargetEditWidget> {
           TargetInfo(
               amount: int.parse(amountController[index].text),
               level: index + 1,
-              pricePool: awardController[index].text.isNotEmpty
-                  ? int.parse(awardController[index].text)
-                  : 0),
+              pricePool: awardController[index].text),
         );
       }
     }
@@ -72,7 +70,7 @@ class _SaleTargetEditWidgetState extends State<SaleTargetEditWidget> {
         amountController[index].text =
             widget.saleTarget.targets[index].amount.toString();
       }
-      if (widget.saleTarget.targets[index].pricePool != 0) {
+      if (widget.saleTarget.targets[index].pricePool != null) {
         awardController[index].text =
             widget.saleTarget.targets[index].pricePool.toString();
       }
@@ -125,7 +123,6 @@ class _SaleTargetEditWidgetState extends State<SaleTargetEditWidget> {
                           width: 80,
                           child: TextField(
                             controller: awardController[0],
-                            keyboardType: TextInputType.number,
                             style: secondaryTextStyle(),
                             decoration: const InputDecoration(
                               hintText: 'Reward',
@@ -135,10 +132,6 @@ class _SaleTargetEditWidgetState extends State<SaleTargetEditWidget> {
                             ),
                             onChanged: (value) {},
                           ),
-                        ),
-                        Text(
-                          'ks',
-                          style: primaryTextStyle(color: Colors.grey),
                         ),
                       ],
                     ),
@@ -165,7 +158,6 @@ class _SaleTargetEditWidgetState extends State<SaleTargetEditWidget> {
                           width: 80,
                           child: TextField(
                             controller: awardController[1],
-                            keyboardType: TextInputType.number,
                             style: secondaryTextStyle(),
                             decoration: const InputDecoration(
                               hintText: 'Reward',
@@ -175,10 +167,6 @@ class _SaleTargetEditWidgetState extends State<SaleTargetEditWidget> {
                             ),
                             onChanged: (value) {},
                           ),
-                        ),
-                        Text(
-                          'ks',
-                          style: primaryTextStyle(color: Colors.grey),
                         ),
                       ],
                     ),
@@ -205,7 +193,6 @@ class _SaleTargetEditWidgetState extends State<SaleTargetEditWidget> {
                           width: 80,
                           child: TextField(
                             controller: awardController[2],
-                            keyboardType: TextInputType.number,
                             style: secondaryTextStyle(),
                             decoration: const InputDecoration(
                               hintText: 'Reward',
@@ -215,10 +202,6 @@ class _SaleTargetEditWidgetState extends State<SaleTargetEditWidget> {
                             ),
                             onChanged: (value) {},
                           ),
-                        ),
-                        Text(
-                          'ks',
-                          style: primaryTextStyle(color: Colors.grey),
                         ),
                       ],
                     ),

@@ -1,3 +1,4 @@
+import 'package:cholay_ice_sale/common/extensions/string_extensions.dart';
 import 'package:cholay_ice_sale/screens/setting/transport_target_setting/transport_target_edit_widget.dart';
 import 'package:cholay_ice_sale/screens/setting/transport_target_setting/transport_target_setting_viewmodel.dart';
 import 'package:cholay_ice_sale/widgets/body_widget.dart';
@@ -45,8 +46,8 @@ class TransportTargetSettingView extends StatelessWidget {
                         ),
                         const Spacer(),
                         IconButton(
-                            onPressed: () {
-                              Navigator.push(
+                            onPressed: () async {
+                              var isEdited = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
@@ -56,6 +57,9 @@ class TransportTargetSettingView extends StatelessWidget {
                                                       .transportTargetList,
                                               transportTargetSettingViewModel:
                                                   targetSettingViewModel)));
+                              if (isEdited == true) {
+                                targetSettingViewModel.getData();
+                              }
                             },
                             icon: const Icon(
                               Icons.edit,
@@ -75,27 +79,46 @@ class TransportTargetSettingView extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Text(
-                                      'Level  ${targetSettingViewModel.transportTargetList[index].targetLevel.toString()}   ',
-                                      style: secondaryTextStyle()),
-                                  Text(
-                                      '${DateFormat('hh:mm').format(targetSettingViewModel.transportTargetList[index].startingTime)}AM  '
-                                      '${targetSettingViewModel.transportTargetList[index].days.toString()} days',
-                                      style: secondaryTextStyle()),
-                                  const Spacer(),
-                                  if (targetSettingViewModel
-                                          .transportTargetList[index]
-                                          .pricePool !=
-                                      null)
-                                    Text('Award  ',
-                                        style: secondaryTextStyle()),
-                                  if (targetSettingViewModel
-                                          .transportTargetList[index]
-                                          .pricePool !=
-                                      null)
-                                    Text(
-                                        '${targetSettingViewModel.transportTargetList[index].pricePool.toString()} ks',
-                                        style: secondaryTextStyle()),
+                                  Expanded(
+                                    flex: 6,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                            'Level  ${targetSettingViewModel.transportTargetList[index].targetLevel.toString()}   ',
+                                            style: secondaryTextStyle()),
+                                        Text(
+                                            '${DateFormat('hh:mm').format(targetSettingViewModel.transportTargetList[index].startingTime)}AM  '
+                                            '${targetSettingViewModel.transportTargetList[index].days.toString()} days',
+                                            style: secondaryTextStyle()),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                      flex: 5,
+                                      child: Row(
+                                        children: [
+                                          if (targetSettingViewModel
+                                                  .transportTargetList[index]
+                                                  .pricePool !=
+                                              null)
+                                            Text('  Award  ',
+                                                style: secondaryTextStyle()),
+                                          if (targetSettingViewModel
+                                                  .transportTargetList[index]
+                                                  .pricePool !=
+                                              null)
+                                            Expanded(
+                                              child: Text(
+                                                targetSettingViewModel
+                                                    .transportTargetList[index]
+                                                    .pricePool!
+                                                    .intelliTrim(),
+                                                style: secondaryTextStyle(),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                        ],
+                                      )),
                                 ],
                               ),
                               SizedBox(height: 15)

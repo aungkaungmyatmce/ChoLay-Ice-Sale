@@ -28,7 +28,7 @@ class SaleTarget {
 class TargetInfo {
   final int amount;
   final int level;
-  final int? pricePool;
+  final String? pricePool;
 
   TargetInfo({required this.amount, required this.level, this.pricePool});
   factory TargetInfo.fromJson(dynamic jsonData) {

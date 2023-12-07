@@ -51,9 +51,7 @@ class SaleTargetSettingViewModel with ChangeNotifier {
       saleTargetList.add(SaleTarget(
           productName: product.name,
           targets: List.generate(
-              3,
-              (index) =>
-                  TargetInfo(level: index + 1, amount: 0, pricePool: 0))));
+              3, (index) => TargetInfo(level: index + 1, amount: 0))));
     });
     notifyListeners();
   }

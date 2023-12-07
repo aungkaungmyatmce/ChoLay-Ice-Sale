@@ -131,9 +131,17 @@ class SaleTargetSettingView extends StatelessWidget {
                                                   .targets[index2]
                                                   .pricePool !=
                                               null)
-                                            Text(
-                                                '${targetSettingViewModel.saleTargetList[index].targets[index2].pricePool.toString()} ks',
-                                                style: secondaryTextStyle()),
+                                            Expanded(
+                                              child: Text(
+                                                  targetSettingViewModel
+                                                      .saleTargetList[index]
+                                                      .targets[index2]
+                                                      .pricePool
+                                                      .toString(),
+                                                  style: secondaryTextStyle(),
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
+                                            ),
                                         ],
                                       ),
                                     ),
